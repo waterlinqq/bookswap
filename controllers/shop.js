@@ -1,3 +1,7 @@
+const Product = require("../models/product");
 exports.getIndex = (req, res, next) => {
-  res.render("shop/index");
+  Product.getAll().then((data) => {
+    console.log(data);
+    res.render("shop/index", { prods: data });
+  });
 };

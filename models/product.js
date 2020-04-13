@@ -15,7 +15,7 @@ class Product {
   save() {
     const readCb = (err, data) => {
       if (err) data = "[]";
-      const content = JSON.parse(data.toString());
+      const content = JSON.parse(data.toString() || "[]");
       content.push(this);
       fs.writeFile(filePath, JSON.stringify(content), console.log);
     };
