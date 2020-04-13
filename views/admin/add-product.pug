@@ -1,0 +1,16 @@
+extends ../layouts/main-layout.pug
+block content
+  form.prodcut-form(action="/admin/add-product", method="post")
+    .form-control
+      label(for="title") 書名 
+      input(type="text", name="title", id="title")
+    .form-control
+      label(for="imageUrl") 圖片連結
+      input(type="text" name="imageUrl" id="imageUrl")
+    .form-control
+      label(for="price") 換幣
+      input(type="number" name="price" id="price")
+    .form-control
+      label(for="description") 細節
+      textarea(cols="30", rows="10" name="description" id="description")
+    button(type="submit") 送出
