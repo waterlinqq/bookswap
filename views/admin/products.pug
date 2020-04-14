@@ -14,7 +14,7 @@ block content
                 p.product__description #{prod.description} 
                 .card__actions
                   a(href=`/admin/edit-product/${prod.id}`) 編輯
-                  form(action="admin/delete-product", method="POST")
+                  form(action="/admin/delete-product", method="POST")
                     input(type="hidden" value=prod.id name="productId")
                     button.btn(type="submit") 刪除
     else
