@@ -1,0 +1,21 @@
+extends ../layouts/main-layout.pug
+block content 
+  main 
+    if prods.length
+      .grid      
+        each prod in prods  
+          article.card.product-item
+            header.card__header
+              h1.product__title #{prod.title}
+              .card__image 
+                img(src=prod.url, width="200px", height="150px") 
+              .card__content 
+                h2.card__price #{prod.price}
+                p.product__description #{prod.description} 
+                .card__actions
+                  a(href=`/admin/edit-product/${prod.id}`) 編輯
+                  form(action="admin/delete-product", method="POST")
+                    input(type="hidden" value=prod.id name="productId")
+                    button.btn(type="submit") 刪除
+    else
+      h1 尚無書籍

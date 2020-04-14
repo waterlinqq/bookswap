@@ -9,3 +9,18 @@ exports.postAddProduct = (req, res, next) => {
   const { title, price, description, url } = req.body;
   new Product(title, url, price, description).save();
 };
+
+exports.getProducts = (req, res, next) => {
+  Product.getAll().then((data) => {
+    res.render("admin/products", {
+      prods: data,
+    });
+  });
+};
+
+exports.getEditProduct = (req, res, next) => {
+  const id = req.params.productId;
+  Product.getById(id).then((prod) => {
+    res.render("admin/edit-product", { prod });
+  });
+};
