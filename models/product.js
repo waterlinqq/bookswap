@@ -6,7 +6,7 @@ const filePath = path.join(rootDir, "data", "products.json");
 
 class Product {
   constructor(title, url, price, description) {
-    this.id = Math.random();
+    this.id = Math.random().toString();
     this.title = title;
     this.url = url;
     this.price = price;
@@ -26,6 +26,18 @@ class Product {
       fs.readFile(filePath, (err, data) => {
         if (err) reject([]);
         else resolve(JSON.parse(data.toString()));
+      });
+    });
+  }
+  static getById(id) {
+    return new Promise((resolve, reject) => {
+      fs.readFile(filePath, (err, data) => {
+        if (err) reject(null);
+        else {
+          const products = JSON.parse(data.toString());
+          const product = products.find((p) => p.id === id);
+          resolve(product);
+        }
       });
     });
   }
