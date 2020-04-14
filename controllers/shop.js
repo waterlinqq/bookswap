@@ -5,3 +5,10 @@ exports.getIndex = (req, res, next) => {
     res.render("shop/index", { prods: data });
   });
 };
+
+exports.getProduct = (req, res, next) => {
+  const id = req.params.productId;
+  Product.getById(id).then((prod) => {
+    res.render("shop/product", { prod });
+  });
+};
