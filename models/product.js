@@ -55,6 +55,20 @@ class Product {
       });
     });
   }
+  static delById(id) {
+    return new Promise((resolve, reject) => {
+      fs.readFile(filePath, (err, data) => {
+        if (err) reject(err);
+        else {
+          const products = JSON.parse(data.toString());
+          const index = products.findIndex((p) => p.id === id);
+          products.splice(index, 1);
+          fs.writeFile(filePath, JSON.stringify(products), console.log);
+          resolve(true);
+        }
+      });
+    });
+  }
 }
 
 module.exports = Product;
