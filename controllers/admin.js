@@ -24,3 +24,10 @@ exports.getEditProduct = (req, res, next) => {
     res.render("admin/edit-product", { prod });
   });
 };
+
+exports.postEditProduct = (req, res, next) => {
+  const { id, title, url, price, description } = req.body;
+  Product.modById(id, { title, url, price, description }).then(() => {
+    res.redirect("/admin/products");
+  });
+};
