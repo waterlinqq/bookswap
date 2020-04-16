@@ -1,0 +1,16 @@
+extends ../layouts/main-layout.pug
+block content 
+  main 
+    if prods.length
+      .grid      
+        each prod in prods  
+          a(href=`/shop/${prod.id}`)
+            article.card.product-item
+              header.card__header
+                h1.product__title #{prod.title}
+                .card__image 
+                  img(src=prod.url, width="200px", height="150px") 
+                .card__content 
+                  h2.card__price #{prod.price} 
+    else
+      h1 尚無最愛

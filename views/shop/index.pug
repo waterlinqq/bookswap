@@ -14,6 +14,6 @@ block content
                 p.product__description #{prod.description} 
                 .card__actions
                   a.btn(href=`/shop/${prod.id}`) 詳情
-                  button.btn 加入最愛
+                  include ../includes/add-favorite.pug
     else 
       h1 尚無書籍
