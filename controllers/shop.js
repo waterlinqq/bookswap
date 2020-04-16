@@ -14,7 +14,7 @@ exports.getProduct = (req, res, next) => {
   });
 };
 
-exports.getFavoriteProducts = async (req, res, next) => {
+exports.getFavorites = async (req, res, next) => {
   const products = await Product.getAll();
   const favorites = await Favorites.getAll();
   const prods = favorites.map((fav) =>
@@ -23,8 +23,16 @@ exports.getFavoriteProducts = async (req, res, next) => {
   res.render("shop/favorites", { prods });
 };
 
-exports.postFavoriteProduct = (req, res, next) => {
+exports.postFavorite = (req, res, next) => {
   const prodId = req.body.productId;
   new Favorites(prodId).save();
   res.redirect("/shop/favorites");
+};
+
+exports.postDeleteFavorite = (req, res, next) => {
+  const prodId = req.body.productId;
+  Favorites.delByProdId(prodId).then((result) => {
+    console.log(result);
+    res.redirect("/shop/favorites");
+  });
 };

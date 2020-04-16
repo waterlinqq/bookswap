@@ -12,5 +12,8 @@ block content
                   img(src=prod.url, width="200px", height="150px") 
                 .card__content 
                   h2.card__price #{prod.price} 
+                form(action="/shop/delete-favorite" method="POST")
+                  input(type="hidden"  name="productId" value=prod.id)
+                  button(type="submit") 取消收藏
     else
       h1 尚無最愛

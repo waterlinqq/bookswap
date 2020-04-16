@@ -33,14 +33,16 @@ class Favorite {
   static delByProdId(id) {
     return new Promise((resolve, reject) => {
       fs.readFile(filePath, (err, data) => {
-        if (err) reject(err);
-        else {
-          const favorites = JSON.parse(data.toString());
-          const index = favorites.findIndex((p) => p.prodId === id);
-          favorites.splice(index, 1);
-          fs.writeFile(filePath, JSON.stringify(favorites), console.log);
-          resolve(true);
+        let favorites;
+        try {
+          favorites = JSON.parse(data.toString());
+        } catch {
+          favorites = [];
         }
+        const index = favorites.findIndex((p) => p.prodId === id);
+        favorites.splice(index, 1);
+        fs.writeFile(filePath, JSON.stringify(favorites), console.log);
+        resolve(true);
       });
     });
   }
