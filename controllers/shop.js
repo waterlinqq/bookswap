@@ -1,38 +1,38 @@
 const Product = require("../models/product");
-const Favorites = require("../models/favorites");
-exports.getIndex = (req, res, next) => {
-  Product.getAll().then((data) => {
-    console.log(data);
-    res.render("shop/index", { prods: data });
-  });
+// const Favorites = require("../models/favorite");
+
+exports.getIndex = async (req, res, next) => {
+  const prods = await Product.findAll();
+  res.render("shop/index", { prods });
 };
 
-exports.getProduct = (req, res, next) => {
+exports.getProduct = async (req, res, next) => {
   const id = req.params.productId;
-  Product.getById(id).then((prod) => {
-    res.render("shop/product", { prod });
-  });
+  const prod = await Product.findByPk(id);
+  if (prod == null) return res.redirect("/shop/");
+  res.render("shop/product", { prod });
 };
 
 exports.getFavorites = async (req, res, next) => {
-  const products = await Product.getAll();
-  const favorites = await Favorites.getAll();
-  const prods = favorites.map((fav) =>
-    products.find((prod) => prod.id === fav.id)
-  );
+  const favorite = await req.user.getFavorite();
+  const prods = await favorite.getProducts();
   res.render("shop/favorites", { prods });
 };
 
-exports.postFavorite = (req, res, next) => {
-  const prodId = req.body.productId;
-  new Favorites(prodId).save();
+exports.postFavorite = async (req, res, next) => {
+  const id = req.body.productId;
+  const favorite = await req.user.getFavorite();
+  const prods = await favorite.getProducts({ where: { id } });
+  const prod = (prods && prods[0]) || (await Product.findByPk(id));
+  await favorite.addProduct(prod);
   res.redirect("/shop/favorites");
 };
 
-exports.postDeleteFavorite = (req, res, next) => {
-  const prodId = req.body.productId;
-  Favorites.delByProdId(prodId).then((result) => {
-    console.log(result);
-    res.redirect("/shop/favorites");
-  });
+exports.postDeleteFavorite = async (req, res, next) => {
+  const id = req.body.productId;
+  const favorite = await req.user.getFavorite();
+  const prods = await favorite.getProducts({ where: { id } });
+  const prod = prods[0];
+  await favorite.removeProduct(prod);
+  res.redirect("/shop/favorites");
 };
