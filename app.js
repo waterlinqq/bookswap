@@ -56,7 +56,7 @@ Product.belongsToMany(Favorite, { through: FavoriteItem });
 sequelize
   .sync()
   // .sync({ force: true })
-  .then(() => User.findByPk(1))
+  // .then(() => User.findByPk(1))
   // .then((user) => user || User.create({ name: "Tom", email: "test@test.com" }))
   // .then((user) => user.createFavorite())
   .then(() => app.listen(3001))

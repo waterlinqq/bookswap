@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const bycrypt = require("bcryptjs");
 
 exports.getLogin = (req, res, next) => {
   res.render("auth/login", { user: req.user });
@@ -8,7 +9,8 @@ exports.postLogin = async (req, res, next) => {
   const { email, password } = req.body;
   const user = await User.findOne({ where: { email } });
   if (user == null) return res.redirect("/");
-  if (password !== user.password) return res.redirect("/");
+  const result = bycrypt.compare(password, user.password);
+  if (!result) return res.redirect("/");
   req.session.user = user;
   await req.session.save();
   res.redirect("/");
@@ -25,9 +27,10 @@ exports.getSignup = (req, res, next) => {
 
 exports.postSignup = async (req, res, next) => {
   const { email, password, confirmPassword } = req.body;
+  const hashPassord = await bycrypt.hash(password, 12);
   let user = await User.findOne({ where: { email } });
   if (user) return res.redirect("/");
-  user = await User.create({ email, password });
+  user = await User.create({ email, password: hashPassord });
   await user.createFavorite();
   res.redirect("/login");
 };
