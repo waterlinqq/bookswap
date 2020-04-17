@@ -1,0 +1,14 @@
+extends ../layouts/main-layout.pug
+block content
+  main 
+    form.login-form(action="/signup", method="POST")
+      .form-control
+        label(for="email") 信箱
+        input(type="email" name="email" id="email")
+      .form-control
+        label(for="password") 密碼
+        input(type="password" name="password" id="password")
+      .form-control
+        label(for="confirmPassword") 確認密碼
+        input(type="password" name="confirmPassword" id="confrimPassword")
+      button.btn(type="submit") 送出
