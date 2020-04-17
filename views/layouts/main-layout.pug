@@ -14,4 +14,14 @@ html(lang="en")
                         a(href="/shop") Shop
                     li.main-header__item
                         a(href="/admin") Admin
+                        nav.main-header__nav
+                ul.main-header__item-list
+                  if user 
+                    li.main-header__item
+                      form(action="/logout" method="POST")
+                        button(type="submit") 登出
+                   
+                  else
+                    li.main-header__item
+                      a(href="/login") 登入
         block content
