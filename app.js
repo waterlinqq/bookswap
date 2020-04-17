@@ -2,10 +2,13 @@ const path = require("path");
 
 const express = require("express");
 const bodyParser = require("body-parser");
+const session = require("express-session");
+const SequelizeStore = require("connect-session-sequelize")(session.Store);
 
+const sequelize = require("./utils/database");
 const shopRouter = require("./routes/shop");
 const adminRouter = require("./routes/admin");
-const sequelize = require("./utils/database");
+const authRoutes = require("./routes/auth");
 const Product = require("./models/product");
 const User = require("./models/user");
 const Favorite = require("./models/favorite");
@@ -17,18 +20,31 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 app.set("view engine", "pug");
 app.set("views", "views");
-app.use((req, res, next) => {
-  User.findByPk(1)
-    .then((user) => {
-      req.user = user;
-      next();
-    })
-    .catch((err) => console.log(err));
+app.use(
+  session({
+    secret: "my secret",
+    resave: false,
+    saveUninitialized: false,
+    store: new SequelizeStore({
+      db: sequelize,
+    }),
+  })
+);
+
+app.use(async (req, res, next) => {
+  if (!req.session.user) return next();
+  const user = await User.findByPk(req.session.user.id);
+
+  req.user = user;
+  next();
 });
+
 app.use("/shop", shopRouter);
 app.use("/admin", adminRouter);
+app.use(authRoutes);
+
 app.use((req, res, next) => {
-  res.render("index");
+  res.render("index", { user: req.user });
 });
 
 Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
