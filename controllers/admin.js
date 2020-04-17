@@ -4,36 +4,39 @@ exports.getAddProduct = (req, res, next) => {
   res.render("admin/add-product");
 };
 
-exports.postAddProduct = (req, res, next) => {
-  console.log(req.body);
+exports.postAddProduct = async (req, res, next) => {
   const { title, price, description, url } = req.body;
-  new Product(title, url, price, description).save();
+  await req.user.createProduct({ title, price, description, url });
   res.redirect("/admin/products");
 };
 
-exports.getProducts = (req, res, next) => {
-  Product.getAll().then((data) => {
-    res.render("admin/products", {
-      prods: data,
-    });
-  });
+exports.getProducts = async (req, res, next) => {
+  const prods = await req.user.getProducts();
+  res.render("admin/products", { prods });
 };
 
-exports.getEditProduct = (req, res, next) => {
+exports.getEditProduct = async (req, res, next) => {
   const id = req.params.productId;
-  Product.getById(id).then((prod) => {
-    res.render("admin/edit-product", { prod });
-  });
+  const prods = await req.user.getProducts({ where: { id } });
+  const prod = prods[0];
+  if (prod == null) res.redirect("/");
+  res.render("admin/edit-product", { prod });
 };
 
-exports.postEditProduct = (req, res, next) => {
+exports.postEditProduct = async (req, res, next) => {
   const { id, title, url, price, description } = req.body;
-  Product.modById(id, { title, url, price, description }).then(() => {
-    res.redirect("/admin/products");
-  });
+  const prod = await Product.findByPk(id);
+  prod.title = title;
+  prod.url = url;
+  prod.price = price;
+  prod.description = description;
+  await prod.save();
+  res.redirect("/admin/products");
 };
 
-exports.postDeleteProduct = (req, res, next) => {
-  const id = req.body;
-  Product.delById(id).then(() => res.redirect("/admin/products"));
+exports.postDeleteProduct = async (req, res, next) => {
+  const id = req.body.productId;
+  const prod = await Product.findByPk(id);
+  await prod.destroy();
+  res.redirect("/admin/products");
 };
