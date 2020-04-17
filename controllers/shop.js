@@ -3,20 +3,20 @@ const Product = require("../models/product");
 
 exports.getIndex = async (req, res, next) => {
   const prods = await Product.findAll();
-  res.render("shop/index", { prods });
+  res.render("shop/index", { prods, user: req.user });
 };
 
 exports.getProduct = async (req, res, next) => {
   const id = req.params.productId;
   const prod = await Product.findByPk(id);
   if (prod == null) return res.redirect("/shop/");
-  res.render("shop/product", { prod });
+  res.render("shop/product", { prod, user: req.user });
 };
 
 exports.getFavorites = async (req, res, next) => {
   const favorite = await req.user.getFavorite();
   const prods = await favorite.getProducts();
-  res.render("shop/favorites", { prods });
+  res.render("shop/favorites", { prods, user: req.user });
 };
 
 exports.postFavorite = async (req, res, next) => {
