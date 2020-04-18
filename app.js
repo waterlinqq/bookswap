@@ -4,6 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
+const flash = require("connect-flash");
 
 const sequelize = require("./utils/database");
 const shopRouter = require("./routes/shop");
@@ -30,11 +31,11 @@ app.use(
     }),
   })
 );
+app.use(flash());
 
 app.use(async (req, res, next) => {
   if (!req.session.user) return next();
   const user = await User.findByPk(req.session.user.id);
-
   req.user = user;
   next();
 });
