@@ -2,6 +2,7 @@ extends ../layouts/main-layout.pug
 block content
   form.prodcut-form(action="/admin/edit-product", method="post")
     input(type="hidden" name="id" value=prod.id)
+    include ../includes/token-input.pug
     .form-control
       label(for="title") 書名 
       input(type="text", name="title", id="title" value=prod.title)

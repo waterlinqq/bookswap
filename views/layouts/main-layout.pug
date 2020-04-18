@@ -19,6 +19,7 @@ html(lang="en")
                   if user 
                     li.main-header__item
                       form(action="/logout" method="POST")
+                        include ../includes/token-input.pug
                         button(type="submit") 登出
                    
                   else

@@ -5,6 +5,7 @@ const bodyParser = require("body-parser");
 const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const flash = require("connect-flash");
+const csurf = require("csurf");
 
 const sequelize = require("./utils/database");
 const shopRouter = require("./routes/shop");
@@ -14,6 +15,8 @@ const Product = require("./models/product");
 const User = require("./models/user");
 const Favorite = require("./models/favorite");
 const FavoriteItem = require("./models/favorite-item");
+const getUser = require("./middleware/user");
+const getToken = require("./middleware/token");
 
 const app = express();
 
@@ -32,14 +35,10 @@ app.use(
   })
 );
 app.use(flash());
+app.use(csurf());
 
-app.use(async (req, res, next) => {
-  if (!req.session.user) return next();
-  const user = await User.findByPk(req.session.user.id);
-  req.user = user;
-  next();
-});
-
+app.use(getUser);
+app.use(getToken);
 app.use("/shop", shopRouter);
 app.use("/admin", adminRouter);
 app.use(authRoutes);

@@ -13,6 +13,7 @@ block content
                 .card__content 
                   h2.card__price #{prod.price} 
                 form(action="/shop/delete-favorite" method="POST")
+                  include ../includes/token-input.pug
                   input(type="hidden"  name="productId" value=prod.id)
                   button(type="submit") 取消收藏
     else
