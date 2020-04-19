@@ -1,8 +1,7 @@
 extends ../layouts/main-layout.pug
 block content
   main 
-    if errorMessage 
-      h3 #{errorMessage}
+    include ../includes/error-message.pug
     form.login-form(action="/login", method="POST")
       include ../includes/token-input.pug
       .form-control
@@ -12,3 +11,5 @@ block content
         label(for="password") 密碼
         input(type="password" name="password" id="password")
       button.btn(type="submit") 登入
+    .centered
+      a(href="/reset") 忘記密碼

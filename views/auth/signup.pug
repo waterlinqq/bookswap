@@ -1,8 +1,7 @@
 extends ../layouts/main-layout.pug
 block content
   main 
-    if errorMessage 
-      h3 #{errorMessage}
+    include ../includes/error-message.pug
     form.login-form(action="/signup", method="POST")
       include ../includes/token-input.pug
       .form-control
