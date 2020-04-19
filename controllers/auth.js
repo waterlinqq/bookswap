@@ -3,7 +3,7 @@ const bycrypt = require("bcryptjs");
 const sgMail = require("@sendgrid/mail");
 const Op = require("sequelize").Op;
 
-const myPromise = require("../utils/my-promise");
+const denodeify = require("../utils/denodeify");
 const User = require("../models/user");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
@@ -72,11 +72,8 @@ exports.postReset = async (req, res, next) => {
     req.flash("error", "No accouts with that email found!");
     res.redirect("/reset");
   }
-  const tokenP = new myPromise();
-  crypto.randomBytes(32, (err, buffer) =>
-    tokenP.resolve(buffer.toString("hex"))
-  );
-  const token = await tokenP;
+  const buffer = await denodeify(crypto.randomBytes.bind(crypto))(32);
+  const token = buffer.toString("hex");
   user.resetToken = token;
   user.resetTokenExpiration = Date.now() + 3600000;
   await user.save();
