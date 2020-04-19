@@ -1,17 +1,12 @@
+const crypto = require("crypto");
 const bycrypt = require("bcryptjs");
 const sgMail = require("@sendgrid/mail");
+const Op = require("sequelize").Op;
 
+const myPromise = require("../utils/my-promise");
 const User = require("../models/user");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-// const msg = {
-//   to: 'a10311036@gmail.com',
-//   from: 'bookswap@gmail.com',
-//   subject: 'Sending with Twilio SendGrid is Fun',
-//   text: 'and easy to do anywhere, even with Node.js',
-//   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
-// };
-// sgMail.send(msg);
 
 exports.getLogin = (req, res, next) => {
   const [errorMessage] = req.flash("error");
@@ -63,4 +58,70 @@ exports.postSignup = async (req, res, next) => {
     html: "<strong>您已成功註冊</strong>",
   };
   sgMail.send(msg);
+};
+
+exports.getReset = (req, res, next) => {
+  const [errorMessage] = req.flash("error");
+  res.render("auth/reset", { errorMessage });
+};
+
+exports.postReset = async (req, res, next) => {
+  const { email } = req.body;
+  const user = await User.findOne({ where: { email } });
+  if (user == null) {
+    req.flash("error", "No accouts with that email found!");
+    res.redirect("/reset");
+  }
+  const tokenP = new myPromise();
+  crypto.randomBytes(32, (err, buffer) =>
+    tokenP.resolve(buffer.toString("hex"))
+  );
+  const token = await tokenP;
+  user.resetToken = token;
+  user.resetTokenExpiration = Date.now() + 3600000;
+  await user.save();
+  res.redirect("/");
+  const msg = {
+    to: email,
+    from: "a10311036@gmail.com",
+    subject: "密碼重置",
+    html: `
+      <p>您發起重置密碼的請求</p>
+      <p>點擊<a href="http://localhost:3001/reset/${token}">這裏</a>進行重置作業</p>
+      `,
+  };
+  sgMail.send(msg);
+};
+
+exports.getNewPassword = async (req, res, next) => {
+  const { resetToken } = req.params;
+  const user = await User.findOne({
+    where: {
+      resetToken,
+      resetTokenExpiration: { [Op.gte]: Date.now() },
+    },
+  });
+  const [errorMessage] = req.flash("error");
+  res.render("auth/new-password", {
+    errorMessage,
+    userId: user.id.toString(),
+    resetToken,
+  });
+};
+
+exports.postNewPassword = async (req, res, next) => {
+  const { password, resetToken, userId } = req.body;
+  const user = await User.findOne({
+    where: {
+      resetToken,
+      resetTokenExpiration: { [Op.gte]: Date.now() },
+      id: userId,
+    },
+  });
+  const hashPassword = await bycrypt.hash(password, 12);
+  user.password = hashPassword;
+  user.resetToken = undefined;
+  user.resetTokenExpiration = undefined;
+  await user.save();
+  res.redirect("/");
 };

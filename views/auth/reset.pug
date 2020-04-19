@@ -1,0 +1,10 @@
+extends ../layouts/main-layout.pug
+block content
+  main 
+    include ../includes/error-message.pug
+    form.login-form(action="/reset", method="POST")
+      include ../includes/token-input.pug
+      .form-control
+        label(for="email") 信箱
+        input(type="email", name="email" id="email")
+        button.btn(type="submit") 重設密碼

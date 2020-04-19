@@ -9,6 +9,8 @@ const User = sequelize.define("user", {
     allowNull: false,
     primaryKey: true,
   },
+  resetToken: Sequelize.STRING,
+  resetTokenExpiration: Sequelize.DATE,
   name: Sequelize.STRING,
   password: Sequelize.STRING,
   email: Sequelize.STRING,
