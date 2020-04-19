@@ -26,6 +26,8 @@ exports.getEditProduct = async (req, res, next) => {
 exports.postEditProduct = async (req, res, next) => {
   const { id, title, url, price, description } = req.body;
   const prod = await Product.findByPk(id);
+  if (prod.userId.toString() !== req.user.id.toString())
+    return res.redirect("/");
   prod.title = title;
   prod.url = url;
   prod.price = price;
@@ -36,7 +38,7 @@ exports.postEditProduct = async (req, res, next) => {
 
 exports.postDeleteProduct = async (req, res, next) => {
   const id = req.body.productId;
-  const prod = await Product.findByPk(id);
-  await prod.destroy();
+  const prod = await Product.findOne({ where: { id, userId: req.user.id } });
+  if (prod) await prod.destroy();
   res.redirect("/admin/products");
 };
