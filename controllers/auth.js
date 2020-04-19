@@ -1,5 +1,17 @@
-const User = require("../models/user");
 const bycrypt = require("bcryptjs");
+const sgMail = require("@sendgrid/mail");
+
+const User = require("../models/user");
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+// const msg = {
+//   to: 'a10311036@gmail.com',
+//   from: 'bookswap@gmail.com',
+//   subject: 'Sending with Twilio SendGrid is Fun',
+//   text: 'and easy to do anywhere, even with Node.js',
+//   html: '<strong>and easy to do anywhere, even with Node.js</strong>',
+// };
+// sgMail.send(msg);
 
 exports.getLogin = (req, res, next) => {
   const [errorMessage] = req.flash("error");
@@ -44,4 +56,11 @@ exports.postSignup = async (req, res, next) => {
   user = await User.create({ email, password: hashPassord });
   await user.createFavorite();
   res.redirect("/login");
+  const msg = {
+    to: email,
+    from: "a10311036@gmail.com",
+    subject: "註冊成功",
+    html: "<strong>您已成功註冊</strong>",
+  };
+  sgMail.send(msg);
 };
