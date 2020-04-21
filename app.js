@@ -11,7 +11,8 @@ const csurf = require("csurf");
 const sequelize = require("./utils/database");
 const shopRouter = require("./routes/shop");
 const adminRouter = require("./routes/admin");
-const authRoutes = require("./routes/auth");
+const authRouter = require("./routes/auth");
+const errorRouter = require("./routes/error");
 const Product = require("./models/product");
 const User = require("./models/user");
 const Favorite = require("./models/favorite");
@@ -42,10 +43,15 @@ app.use(getUser);
 app.use(getToken);
 app.use("/shop", shopRouter);
 app.use("/admin", adminRouter);
-app.use(authRoutes);
+app.use(authRouter);
 
-app.use((req, res, next) => {
+app.get("/", (req, res, next) => {
   res.render("index", { user: req.user });
+});
+app.use(errorRouter);
+
+app.use((error, req, res, next) => {
+  res.status(500).render("error/500");
 });
 
 Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
