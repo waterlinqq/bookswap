@@ -19,6 +19,7 @@ const Favorite = require("./models/favorite");
 const FavoriteItem = require("./models/favorite-item");
 const getUser = require("./middleware/user");
 const getToken = require("./middleware/token");
+const getDefault = require("./middleware/default");
 
 const app = express();
 
@@ -41,6 +42,7 @@ app.use(csurf());
 
 app.use(getUser);
 app.use(getToken);
+app.use(getDefault);
 app.use("/shop", shopRouter);
 app.use("/admin", adminRouter);
 app.use(authRouter);
@@ -51,6 +53,7 @@ app.get("/", (req, res, next) => {
 app.use(errorRouter);
 
 app.use((error, req, res, next) => {
+  console.error(error);
   res.status(500).render("error/500");
 });
 
