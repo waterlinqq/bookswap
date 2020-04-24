@@ -28,7 +28,7 @@ exports.getEditProduct = async (req, res, next) => {
   const id = req.params.productId;
   const [prod] = await req.user.getProducts({ where: { id } });
   if (prod == null) res.redirect("/");
-  res.render("admin/edit-product", { prod });
+  res.render("admin/edit-product", { value: prod });
 };
 
 exports.postEditProduct = async (req, res, next) => {

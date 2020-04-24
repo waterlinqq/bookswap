@@ -2,6 +2,7 @@ const crypto = require("crypto");
 const bycrypt = require("bcryptjs");
 const sgMail = require("@sendgrid/mail");
 const Op = require("sequelize").Op;
+const { validationResult } = require("express-validator/check");
 
 const denodeify = require("../utils/denodeify");
 const User = require("../models/user");
@@ -15,16 +16,27 @@ exports.getLogin = (req, res, next) => {
 
 exports.postLogin = async (req, res, next) => {
   const { email, password } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).render("auth/login", {
+      value: { email },
+      errorMessage: errors.array()[0].msg,
+      errorParam: errors.array()[0].param,
+    });
+  }
+
   const user = await User.findOne({ where: { email } });
-  if (!user) {
-    req.flash("error", "Invalid email or password");
-    return res.redirect("/login");
-  }
+  if (!user)
+    return res.status(422).render("auth/login", {
+      value: { email },
+      errorMessage: "帳號或密碼錯誤",
+    });
   const result = await bycrypt.compare(password, user.password);
-  if (!result) {
-    req.flash("error", "Invalid email or password");
-    return res.redirect("/login");
-  }
+  if (!result)
+    return res.status(422).render("auth/login", {
+      value: { email },
+      errorMessage: "帳號或密碼錯誤",
+    });
   req.session.user = user;
   await req.session.save();
   res.redirect("/");
@@ -41,14 +53,18 @@ exports.getSignup = (req, res, next) => {
 };
 
 exports.postSignup = async (req, res, next) => {
-  const { email, password, confirmPassword } = req.body;
-  const hashPassord = await bycrypt.hash(password, 12);
-  let user = await User.findOne({ where: { email } });
-  if (user) {
-    req.flash("error", "The email has been registered");
-    return res.redirect("/signup");
+  const { email, password } = req.body;
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(422).render("auth/signup", {
+      value: { email },
+      errorMessage: errors.array()[0].msg,
+      errorParam: errors.array()[0].param,
+    });
   }
-  user = await User.create({ email, password: hashPassord });
+  const hashPassord = await bycrypt.hash(password, 12);
+
+  const user = await User.create({ email, password: hashPassord });
   await user.createFavorite();
   res.redirect("/login");
   const msg = {
@@ -117,8 +133,12 @@ exports.postNewPassword = async (req, res, next) => {
   });
   const hashPassword = await bycrypt.hash(password, 12);
   user.password = hashPassword;
-  user.resetToken = undefined;
-  user.resetTokenExpiration = undefined;
+
+  user.resetToken = null;
+  user.resetTokenExpiration = null;
+
+  // user.resetToken = undefined;
+  // user.resetTokenExpiration = undefined;
   await user.save();
   res.redirect("/");
 };

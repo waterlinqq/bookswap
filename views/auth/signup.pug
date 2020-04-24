@@ -6,7 +6,13 @@ block content
       include ../includes/token-input.pug
       .form-control
         label(for="email") 信箱
-        input(type="email" name="email" id="email")
+        input(
+          type="email" 
+          name="email" 
+          id="email"
+          value=value.email
+          class=errorParam == "email" ? 'invalid': ''
+        )
       .form-control
         label(for="password") 密碼
         input(type="password" name="password" id="password")
