@@ -6,5 +6,8 @@ block content
     .image
       img(src=prod.url alt=prod.title) 
     h2 #{prod.price}
+    span #{prod.author}
+    span #{prod.categroy}
+    span #{prod.isbn}
     p #{prod.description}
     include ../includes/add-favorite.pug

@@ -13,6 +13,33 @@ block content
         class=errorParam == "title" ? 'invalid': ''
       )
     .form-control
+      label(for="author") 作者 
+      input(
+        type="text"
+        name="author"
+        id="author"
+        value=value.author
+        class=errorParam == "author" ? 'invalid': ''
+      )
+    .form-control
+      label(for="isbn") ISBN 
+      input(
+        type="text"
+        name="isbn"
+        id="isbn"
+        value=value.isbn
+        class=errorParam == "isbn" ? 'invalid': ''
+      )
+    .form-control
+      label(for="category") 類別 
+      select(
+        name="category"
+        id="category"
+        value=value.category
+        class=errorParam == "category" ? 'invalid': ''
+      )
+        option(value="0") 科幻
+    .form-control
       label(for="url") 圖片連結
       input(
         type="text"

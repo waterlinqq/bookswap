@@ -7,15 +7,23 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = async (req, res, next) => {
-  const { title, price, description, url } = req.body;
+  const { title, price, description, url, author, isbn, category } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty())
     return res.status(422).render("admin/add-product", {
-      value: { title, price, description, url },
+      value: { title, price, description, url, isbn, author, category },
       errorMessage: errors.array()[0].msg,
       errorParam: errors.array()[0].param,
     });
-  await req.user.createProduct({ title, price, description, url });
+  await req.user.createProduct({
+    title,
+    price,
+    description,
+    url,
+    isbn,
+    author,
+    category,
+  });
   res.redirect("/admin/products");
 };
 
@@ -32,11 +40,30 @@ exports.getEditProduct = async (req, res, next) => {
 };
 
 exports.postEditProduct = async (req, res, next) => {
-  const { id, title, url, price, description } = req.body;
+  const {
+    id,
+    title,
+    url,
+    price,
+    description,
+    author,
+    isbn,
+    category,
+  } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty())
     return res.status(422).render("admin/add-product", {
-      value: { title, url, price, description },
+      value: {
+        title,
+        url,
+        price,
+        description,
+        author,
+        isbn,
+        author,
+        isbn,
+        category,
+      },
       errorMessage: errors.array()[0].msg,
       errorParam: errors.array()[0].param,
     });
@@ -47,6 +74,9 @@ exports.postEditProduct = async (req, res, next) => {
   prod.url = url;
   prod.price = price;
   prod.description = description;
+  prod.author = author;
+  prod.isbn = isbn;
+  prod.category = category;
   await prod.save();
   res.redirect("/admin/products");
 };

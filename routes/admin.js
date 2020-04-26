@@ -11,6 +11,8 @@ const checkProduct = [
   body("url").isURL(),
   body("price").isNumeric(),
   body("description").isLength({ max: 400 }).trim(),
+  body("author").isLength({ max: 12 }).trim(),
+  body("isbn").isLength({ max: 17 }).trim(),
 ];
 
 router.get("/add-product", isAuth, adminController.getAddProduct);

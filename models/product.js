@@ -10,6 +10,12 @@ const Product = sequelize.define("product", {
     primaryKey: true,
   },
   title: Sequelize.STRING,
+  author: Sequelize.STRING,
+  isbn: Sequelize.STRING,
+  category: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
   price: {
     type: Sequelize.DOUBLE,
     allowNull: false,

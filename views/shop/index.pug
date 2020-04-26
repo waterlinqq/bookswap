@@ -1,4 +1,6 @@
 extends ../layouts/main-layout.pug
+block styles
+  link(rel="stylesheet", href="/css/shop.css")
 block content 
   main 
     if prods.length
@@ -11,6 +13,7 @@ block content
                 img(src=prod.url, width="200px", height="150px") 
               .card__content 
                 h2.card__price #{prod.price}
+                p.product__author #{prod.author}
                 p.product__description #{prod.description} 
                 .card__actions
                   a.btn(href=`/shop/${prod.id}`) 詳情
