@@ -1,0 +1,43 @@
+@import "config";
+
+.grid {
+  a {
+    text-decoration: none;
+  }
+  display: flex;
+  flex-direction: row;
+  padding: 2rem;
+  .card {
+    width: 250px;
+    background-color: $light;
+    padding: 1rem;
+    margin: 0 1.5rem;
+    @include box-shadow;
+    @include round-border;
+    &__image {
+      img {
+        width: 200px;
+        height: 200px;
+        object-fit: cover;
+      }
+    }
+    &__content {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    &__price {
+      color: $secondary-color;
+    }
+  }
+  .product {
+    &__title {
+      color: $black;
+      margin: 0.5rem 0;
+      display: block;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+  }
+}
