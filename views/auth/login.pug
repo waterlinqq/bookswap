@@ -1,4 +1,6 @@
 extends ../layouts/main-layout.pug
+block styles
+  link(rel="stylesheet", href="/css/login.css")
 block content
   main 
     include ../includes/error-message.pug
@@ -22,6 +24,6 @@ block content
           value=value.password
           class=errorParam == "password" ? 'invalid': ''
         )
-      button.btn(type="submit") 登入
-    .centered
-      a(href="/reset") 忘記密碼
+      .action
+        button.btn(type="submit") 登入
+        a.btn(href="/reset") 忘記密碼
