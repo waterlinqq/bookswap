@@ -1,24 +1,26 @@
 extends ../layouts/main-layout.pug
+block styles 
+  link(rel="stylesheet", href="/css/admin-products.css")
 block content 
   main 
     if prods.length
       .grid      
         each prod in prods  
-          article.card.product-item
-            header.card__header
+          article.card.product
+            .card__image 
+              img(src=prod.url) 
+            .card__info 
               h1.product__title #{prod.title}
-              .card__image 
-                img(src=prod.url, width="200px", height="150px") 
-              .card__content 
-                h2.card__price #{prod.price}
-                span.product__author #{prod.author}
-                span.product__category #{prod.category}
-                p.product__description #{prod.description} 
-                .card__actions
-                  a(href=`/admin/edit-product/${prod.id}`) 編輯
-                  form(action="/admin/delete-product", method="POST")
-                    include ../includes/token-input.pug
-                    input(type="hidden" value=prod.id name="productId")
-                    button.btn(type="submit") 刪除
+              p.product__price 換幣：#{prod.price}
+              p.product__author 作者：#{prod.author}
+              p.product__category 類別：#{prod.category}
+            .card__description
+              p.product__description(style="-webkit-box-orient: vertical") #{prod.description} 
+            .card__actions
+                a.btn(href=`/admin/edit-product/${prod.id}`) 編輯
+                form(action="/admin/delete-product", method="POST")
+                  include ../includes/token-input.pug
+                  input(type="hidden" value=prod.id name="productId")
+                  button.btn(type="submit") 刪除
     else
       h1 尚無書籍
