@@ -1,0 +1,35 @@
+@import "config";
+
+main {
+  margin: 2rem;
+  background-color: $light;
+  padding: 1rem;
+  @include box-shadow;
+  @include round-border;
+  .image {
+    width: 50%;
+    display: inline-block;
+    .image__main {
+      img {
+        width: 30%;
+      }
+    }
+  }
+  .info {
+    width: 50%;
+    display: inline-block;
+    &__price,
+    &__isbn,
+    &__author {
+      padding-top: 0.5rem;
+      font-size: $font-medium;
+      color: $dark;
+    }
+    &__description {
+      padding-top: 0.5rem;
+
+      color: $dark-gray;
+      font-size: $font-small;
+    }
+  }
+}
