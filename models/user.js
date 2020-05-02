@@ -11,7 +11,10 @@ const User = sequelize.define("user", {
   },
   resetToken: Sequelize.STRING,
   resetTokenExpiration: Sequelize.DATE,
-  name: Sequelize.STRING,
+  username: Sequelize.STRING,
+  city: Sequelize.STRING,
+  description: Sequelize.STRING,
+  delivery: Sequelize.STRING,
   password: Sequelize.STRING,
   email: Sequelize.STRING,
 });

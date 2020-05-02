@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator/check");
 
+const fileHelper = require("../utils/file-helper");
 const Product = require("../models/product");
 
 exports.getAddProduct = (req, res, next) => {
@@ -7,23 +8,32 @@ exports.getAddProduct = (req, res, next) => {
 };
 
 exports.postAddProduct = async (req, res, next) => {
-  const { title, price, description, url, author, isbn, category } = req.body;
+  const { title, price, description, author, isbn, category } = req.body;
   const errors = validationResult(req);
+  if (req.files.length == 0)
+    return res.status(422).render("admin/add-product", {
+      value: { title, price, description, isbn, author, category },
+      errorMessage: "請至少提供一張圖片",
+      errorParam: "images",
+    });
   if (!errors.isEmpty())
     return res.status(422).render("admin/add-product", {
-      value: { title, price, description, url, isbn, author, category },
+      value: { title, price, description, isbn, author, category },
       errorMessage: errors.array()[0].msg,
       errorParam: errors.array()[0].param,
     });
-  await req.user.createProduct({
-    title,
-    price,
-    description,
-    url,
-    isbn,
-    author,
-    category,
-  });
+  const url = JSON.stringify(req.files.map((file) => file.path));
+  await req.user
+    .createProduct({
+      title,
+      price,
+      description,
+      url,
+      isbn,
+      author,
+      category,
+    })
+    .catch(console.log);
   res.redirect("/admin/products");
 };
 
@@ -40,22 +50,12 @@ exports.getEditProduct = async (req, res, next) => {
 };
 
 exports.postEditProduct = async (req, res, next) => {
-  const {
-    id,
-    title,
-    url,
-    price,
-    description,
-    author,
-    isbn,
-    category,
-  } = req.body;
+  const { id, title, price, description, author, isbn, category } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty())
     return res.status(422).render("admin/add-product", {
       value: {
         title,
-        url,
         price,
         description,
         author,
@@ -84,6 +84,24 @@ exports.postEditProduct = async (req, res, next) => {
 exports.postDeleteProduct = async (req, res, next) => {
   const id = req.body.productId;
   const prod = await Product.findOne({ where: { id, userId: req.user.id } });
+  for (const url of JSON.parse(prod.url)) {
+    fileHelper.deleteFile("public/" + url);
+  }
   if (prod) await prod.destroy();
   res.redirect("/admin/products");
+};
+
+exports.getUser = (req, res, next) => {
+  return res.render("admin/user");
+};
+
+exports.postUser = async (req, res, next) => {
+  const { username, description, city, delivery } = req.body;
+  const user = req.user;
+  user.username = username;
+  user.description = description;
+  user.city = city;
+  user.delivery = JSON.stringify(delivery);
+  await user.save();
+  return res.redirect("/admin");
 };

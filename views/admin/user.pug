@@ -1,0 +1,52 @@
+extends ../layouts/main-layout.pug
+block styles 
+  link(rel="stylesheet", href="/css/user.css")
+block content
+  include ../includes/error-message.pug
+  form.user-form(action="/admin/user", method="post")
+    include ../includes/token-input.pug
+    .form-control
+      label(for="username") 信箱
+      input(
+        value=user.email
+        disabled
+      )
+    .form-control
+      label(for="username") 使用者名稱
+      input(
+        type="text"
+        name="username"
+        id="username"
+        value=user.username
+        class=errorParam == "username" ? 'invalid': ''
+      )
+    .form-control
+      label(for="city") 城市 
+      input(
+        type="text"
+        name="city"
+        id="city"
+        value=user.city
+        class=errorParam == "city" ? 'invalid': ''
+      )
+    .form-control
+      label(for="delivery") 寄送方式 
+      .delivery
+        - var delivery = JSON.parse(user.delivery) || []
+        label(for="meet") 面交
+        input(id="meet" type="checkbox" name="delivery" value="meet" checked=delivery.includes('meet')) 
+        label(for="post") 郵寄
+        input(id="post" type="checkbox" name="delivery" value="post" checked=delivery.includes('post'))
+        label(for="cargo") 貨運
+        input(id="cargo" type="checkbox" name="delivery" value="cargo" checked=delivery.includes('cargo'))
+        label(for="convenient") 超商 
+        input(id="convenient" type="checkbox" name="delivery" value="convenient" checked=delivery.includes('convenient'))
+    .form-control
+      label(for="description") 簡介
+      textarea(
+        name="description"
+        id="description"
+        class=errorParam == "description" ? 'invalid': ''
+      ) #{user.description}
+    button.btn(type="submit") 送出
+  script(src="/js/add-product.js")
