@@ -7,6 +7,7 @@ const session = require("express-session");
 const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const flash = require("connect-flash");
 const csurf = require("csurf");
+const multer = require("multer");
 
 const sequelize = require("./utils/database");
 const shopRouter = require("./routes/shop");
@@ -22,11 +23,35 @@ const getToken = require("./middleware/token");
 const getDefault = require("./middleware/default");
 
 const app = express();
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "public/images");
+  },
+  filename: (req, file, cb) => {
+    cb(
+      null,
+      `${Date.now()}-${Math.random()}${path.extname(file.originalname)}`
+    );
+  },
+});
+
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  ) {
+    cb(null, true);
+  } else {
+    cb(null, false);
+  }
+};
 
 app.use(bodyParser.urlencoded({ extended: false }));
-
+app.use(multer({ storage, fileFilter }).array("images"));
 app.set("view engine", "pug");
 app.set("views", "views");
+app.use(express.static(path.join(__dirname, "public")));
 app.use(
   session({
     secret: "my secret",
