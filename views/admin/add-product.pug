@@ -3,7 +3,7 @@ block styles
   link(rel="stylesheet", href="/css/add-product.css")
 block content
   include ../includes/error-message.pug
-  form.product-form(action="/admin/add-product", method="post")
+  form.product-form(action="/admin/add-product", method="post", enctype="multipart/form-data")
     include ../includes/token-input.pug
     .form-control
       label.must-fill(for="title") 書名
@@ -42,13 +42,13 @@ block content
       )
         option(value="0") 科幻
     .form-control
-      label(for="url") 圖片連結
+      label(for="images") 圖片
       input(
-        type="text"
-        name="url"
-        id="url"
-        value=value.url
-        class=errorParam == "url" ? 'invalid': ''
+        multiple
+        type="file"
+        name="images"
+        id="images"
+        class=errorParam == "images" ? 'invalid': ''
       )
     .form-control
       label.must-fill(for="price") 換幣

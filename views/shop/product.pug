@@ -5,8 +5,10 @@ block content
   main.centered
     .image
       .image__thumb
+        each url in JSON.parse(prod.url)
+          img(src='/'+url alt=prod.title)
       .image__main
-        img(src=prod.url alt=prod.title)
+        img(src='/'+ JSON.parse(prod.url)[0] alt=prod.title)
     .info
       span.info__category #{prod.categroy}
       h1.info__title(title=prod.title) #{prod.title}

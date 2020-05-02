@@ -8,7 +8,6 @@ const isAuth = require("../middleware/is-auth");
 
 const checkProduct = [
   body("title").isString().isLength({ min: 3 }).trim(),
-  body("url").isURL(),
   body("price").isNumeric(),
   body("description").isLength({ max: 400 }).trim(),
   body("author").isLength({ max: 12 }).trim(),
@@ -31,5 +30,9 @@ router.post(
   adminController.postEditProduct
 );
 router.post("/delete-product", isAuth, adminController.postDeleteProduct);
+
+router.get("/user", isAuth, adminController.getUser);
+router.post("/user", isAuth, adminController.postUser);
+router.get("/", isAuth, adminController.getProducts);
 
 module.exports = router;
