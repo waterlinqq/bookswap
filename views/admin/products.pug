@@ -8,7 +8,7 @@ block content
         each prod in prods  
           article.card.product
             .card__image 
-              img(src=prod.url) 
+              img(src='/images/' +JSON.parse(prod.url)[0]) 
             .card__info 
               h1.product__title #{prod.title}
               p.product__price 換幣：#{prod.price}
