@@ -11,7 +11,7 @@ block content
               header.card__header
                 h1.product__title #{prod.title}
                 .card__image 
-                  img(src=prod.url, width="200px", height="150px") 
+                  img(src='/images/' + JSON.parse(prod.url)[0], width="200px", height="150px") 
                 .card__content 
                   h2.card__price #{prod.price} 
                   form(action="/shop/delete-favorite" method="POST")

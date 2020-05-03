@@ -22,7 +22,7 @@ exports.postAddProduct = async (req, res, next) => {
       errorMessage: errors.array()[0].msg,
       errorParam: errors.array()[0].param,
     });
-  const url = JSON.stringify(req.files.map((file) => file.path));
+  const url = JSON.stringify(req.files.map((file) => file.filename));
   await req.user
     .createProduct({
       title,
