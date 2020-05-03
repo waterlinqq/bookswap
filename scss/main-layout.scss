@@ -1,0 +1,68 @@
+@import "config";
+
+.main-header {
+  font-size: $font-medium;
+  height: 40px;
+  &__nav {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+  }
+  background-color: $primary-color;
+
+  &__item-list {
+    display: flex;
+    flex-direction: row;
+  }
+  &__item {
+    padding: 0 1rem;
+    line-height: 40px;
+    list-style: none;
+    a {
+      color: set-text-color($primary-color);
+    }
+    button {
+      line-height: 40px;
+      display: block;
+      background-color: transparent;
+      color: set-text-color($primary-color);
+      font-size: $font-medium;
+      border: none;
+    }
+    &:hover {
+      backdrop-filter: brightness(50%);
+    }
+  }
+}
+.main {
+  height: calc(100vh - 40px);
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: stretch;
+
+  &__content {
+    flex-grow: 1;
+  }
+}
+
+.side-bar {
+  width: 150px;
+  height: 100%;
+  background-color: $light;
+  box-shadow: -5px 0px 5px rgba(0, 0, 0, 0.2);
+  &__item {
+    text-align: center;
+    font-size: $font-medium;
+    a {
+      display: block;
+      padding: 0.5rem;
+      color: $primary-color;
+      &:hover,
+      &.active {
+        background-color: $primary-color;
+        color: set-text-color($primary-color);
+      }
+    }
+  }
+}

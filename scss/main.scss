@@ -1,46 +1,17 @@
 @import "config";
-* {
-  // border: 0.5px solid rgba(0, 0, 0, 0.2);
-}
-.main-header {
-  font-size: $font-medium;
-  &__nav {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-  }
-  background-color: $primary-color;
 
-  &__item-list {
-    display: flex;
-    flex-direction: row;
-  }
-  &__item {
-    padding: 1rem;
-    list-style: none;
-    a {
-      color: set-text-color($primary-color);
-      text-decoration: none;
-    }
-    button {
-      display: block;
-      background-color: transparent;
-      color: set-text-color($primary-color);
-      font-size: $font-medium;
-      border: none;
-    }
-    &:hover {
-      backdrop-filter: brightness(50%);
-    }
-  }
+li {
+  list-style: none;
 }
-
+a {
+  text-decoration: none;
+  color: initial;
+}
 .btn {
   display: inline-block;
   background-color: transparent;
   color: $primary-color;
   font-size: $font-medium;
-  text-decoration: none;
   border: none;
   padding: 3px 5px;
   border-radius: 2px 2px;

@@ -6,15 +6,16 @@ html(lang="en")
         meta(http-equiv="X-UA-Compatible", content="ie=edge")
         title #{pageTitle}
         link(rel="stylesheet", href="/css/main.css")
+        link(rel="stylesheet", href="/css/main-layout.css")
         block styles
     body   
         header.main-header
             nav.main-header__nav
                 ul.main-header__item-list
                     li.main-header__item
-                        a(href="/shop") Shop
+                        a(href="/shop") 書店
                     li.main-header__item
-                        a(href="/admin") Admin
+                        a(href="/admin") 用戶
                         nav.main-header__nav
                 ul.main-header__item-list
                   if user 
@@ -28,4 +29,8 @@ html(lang="en")
                       a(href="/login") 登入
                     li.main-header__item
                       a(href="/signup") 註冊
-        block content
+        .main
+          .main__content
+            block content
+          .main__side-bar
+            include ../includes/side-bar.pug

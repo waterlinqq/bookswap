@@ -10,15 +10,18 @@ const User = require("../models/user");
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 exports.getLogin = (req, res, next) => {
+  const dest = "auth/login";
   const [errorMessage] = req.flash("error");
-  res.render("auth/login", { user: req.user, errorMessage });
+  res.render("auth/login", { user: req.user, errorMessage, dest });
 };
 
 exports.postLogin = async (req, res, next) => {
+  const dest = "auth/login";
   const { email, password } = req.body;
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    return res.status(422).render("auth/login", {
+    return res.status(422).render(dest, {
+      dest,
       value: { email },
       errorMessage: errors.array()[0].msg,
       errorParam: errors.array()[0].param,
@@ -27,13 +30,15 @@ exports.postLogin = async (req, res, next) => {
 
   const user = await User.findOne({ where: { email } });
   if (!user)
-    return res.status(422).render("auth/login", {
+    return res.status(422).render(dest, {
+      dest,
       value: { email },
       errorMessage: "帳號或密碼錯誤",
     });
   const result = await bycrypt.compare(password, user.password);
   if (!result)
-    return res.status(422).render("auth/login", {
+    return res.status(422).render(dest, {
+      dest,
       value: { email },
       errorMessage: "帳號或密碼錯誤",
     });
@@ -48,8 +53,9 @@ exports.postLogout = async (req, res, next) => {
 };
 
 exports.getSignup = (req, res, next) => {
+  const dest = "auth/signup";
   const [errorMessage] = req.flash("error");
-  res.render("auth/signup", { errorMessage });
+  res.render("auth/signup", { errorMessage, dest });
 };
 
 exports.postSignup = async (req, res, next) => {
@@ -57,6 +63,7 @@ exports.postSignup = async (req, res, next) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
     return res.status(422).render("auth/signup", {
+      dest: "auth/signup",
       value: { email },
       errorMessage: errors.array()[0].msg,
       errorParam: errors.array()[0].param,
@@ -77,8 +84,9 @@ exports.postSignup = async (req, res, next) => {
 };
 
 exports.getReset = (req, res, next) => {
+  const dest = "auth/reset";
   const [errorMessage] = req.flash("error");
-  res.render("auth/reset", { errorMessage });
+  res.render(dest, { errorMessage, dest });
 };
 
 exports.postReset = async (req, res, next) => {
@@ -107,6 +115,7 @@ exports.postReset = async (req, res, next) => {
 };
 
 exports.getNewPassword = async (req, res, next) => {
+  const dest = "auth/new-password";
   const { resetToken } = req.params;
   const user = await User.findOne({
     where: {
@@ -116,6 +125,7 @@ exports.getNewPassword = async (req, res, next) => {
   });
   const [errorMessage] = req.flash("error");
   res.render("auth/new-password", {
+    dest,
     errorMessage,
     userId: user.id.toString(),
     resetToken,
