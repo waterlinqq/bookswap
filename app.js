@@ -18,6 +18,7 @@ const Product = require("./models/product");
 const User = require("./models/user");
 const Favorite = require("./models/favorite");
 const FavoriteItem = require("./models/favorite-item");
+const Message = require("./models/message");
 const getUser = require("./middleware/user");
 const getToken = require("./middleware/token");
 const getDefault = require("./middleware/default");
@@ -88,6 +89,8 @@ User.hasOne(Favorite);
 Favorite.belongsTo(User);
 Favorite.belongsToMany(Product, { through: FavoriteItem });
 Product.belongsToMany(Favorite, { through: FavoriteItem });
+Message.belongsTo(Product);
+Product.hasMany(Message);
 sequelize
   .sync()
   // .sync({ force: true })

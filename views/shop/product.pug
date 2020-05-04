@@ -1,20 +1,24 @@
 extends ../layouts/main-layout.pug
 block styles 
   link(rel="stylesheet", href="/css/product.css")
+  link(rel="stylesheet", href="/css/message.css")
 block content 
-  main.centered
-    .image
-      .image__thumb
-        each url in JSON.parse(prod.url)
-          img(src='/images/'+url alt=prod.title)
-      .image__main
-        img(src='/images/'+ JSON.parse(prod.url)[0] alt=prod.title)
-    .info
-      span.info__category #{prod.categroy}
-      h1.info__title(title=prod.title) #{prod.title}
-      hr
-      p.info__price 換幣：#{prod.price}
-      p.info__author 作者：#{prod.author}
-      p.info__isbn ISBN：#{prod.isbn}
-      p.info__description #{prod.description}
-      include ../includes/add-favorite.pug
+  main
+    section.product
+      .image
+        .image__thumb
+          each url in JSON.parse(prod.url)
+            img(src='/images/'+url alt=prod.title)
+        .image__main
+          img(src='/images/'+ JSON.parse(prod.url)[0] alt=prod.title)
+      .info
+        span.info__category #{prod.categroy}
+        h1.info__title(title=prod.title) #{prod.title}
+        hr
+        p.info__price 換幣：#{prod.price}
+        p.info__author 作者：#{prod.author}
+        p.info__isbn ISBN：#{prod.isbn}
+        p.info__description #{prod.description}
+        include ../includes/add-favorite.pug
+    section
+      include ../includes/message.pug

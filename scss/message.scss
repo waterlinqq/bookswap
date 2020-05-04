@@ -1,0 +1,30 @@
+@import "./config";
+.message-list {
+  margin: 2rem;
+  background-color: $light;
+  padding: 1rem;
+  @include box-shadow;
+  @include round-border;
+  &__item {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    @include box-shadow-inset;
+    @include round-border;
+    background-color: $white;
+  }
+  .message {
+    &__user {
+      font-size: $font-small;
+      font-weight: bold;
+    }
+    &__content {
+      padding: 0.5rem;
+      font-size: $font-small;
+    }
+    &__time {
+      text-align: right;
+      font-size: $font-tiny;
+      color: $dark-gray;
+    }
+  }
+}

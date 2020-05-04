@@ -8,6 +8,7 @@ const router = express.Router();
 router.get("/favorites", isAuth, shopController.getFavorites);
 router.post("/favorites", isAuth, shopController.postFavorite);
 router.post("/delete-favorite", isAuth, shopController.postDeleteFavorite);
+router.post("/:productId", shopController.postMessage);
 router.get("/:productId", shopController.getProduct);
 router.get("/", shopController.getIndex);
 

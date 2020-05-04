@@ -16,6 +16,9 @@ $font-tiny: 0.8rem;
 @mixin box-shadow {
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
 }
+@mixin box-shadow-inset {
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3) inset;
+}
 @mixin round-border {
   border-radius: 5px 5px;
 }

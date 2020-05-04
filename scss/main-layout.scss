@@ -36,6 +36,7 @@
 }
 .main {
   height: calc(100vh - 40px);
+
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -43,6 +44,10 @@
 
   &__content {
     flex-grow: 1;
+  }
+  main {
+    height: 100%;
+    overflow: scroll;
   }
 }
 
