@@ -1,6 +1,6 @@
 ul.side-bar
-  - var isShop = dest.startsWith('shop')
-  - var isAdmin = dest.startsWith('admin')
+  - var isShop = dest && dest.startsWith('shop')
+  - var isAdmin = dest && dest.startsWith('admin')
   if isAdmin
     - var subPath = dest.split('/')[1]
     li.side-bar__item
