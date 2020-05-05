@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const { Op } = require("sequelize");
 // const Favorites = require("../models/favorite");
 
 exports.getIndex = async (req, res, next) => {
@@ -51,4 +52,23 @@ exports.postMessage = async (req, res, next) => {
   if (prod == null) return res.redirect("/shop/" + productId);
   await prod.createMessage({ content, user }).catch(console.log);
   res.redirect("/shop/" + productId);
+};
+
+exports.postSearch = async (req, res, next) => {
+  const dest = "shop/index";
+  const { keyword } = req.body;
+
+  const option = {
+    where: {
+      [Op.or]: {
+        title: { [Op.like]: "%" + keyword + "%" },
+        author: { [Op.like]: "%" + keyword + "%" },
+      },
+    },
+  };
+  if (!isNaN(Number(keyword)) && keyword.length > 8) {
+    option.where[Op.or].isbn = { [Op.like]: "%" + keyword + "%" };
+  }
+  const prods = await Product.findAll(option);
+  res.render(dest, { prods, dest });
 };

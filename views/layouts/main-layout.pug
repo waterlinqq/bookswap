@@ -18,6 +18,7 @@ html(lang="en")
                         a(href="/admin") 用戶
                         nav.main-header__nav
                 ul.main-header__item-list
+                  include ../includes/search.pug
                   if user 
                     li.main-header__item
                       form(action="/logout" method="POST")
