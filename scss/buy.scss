@@ -1,0 +1,14 @@
+@import "./config";
+main {
+  h1 {
+    text-align: center;
+    font-size: $font-large;
+    padding: 0;
+    margin: 0;
+    margin: 2rem;
+  }
+  .buy-form {
+    max-width: 500px;
+    margin: 2rem auto;
+  }
+}

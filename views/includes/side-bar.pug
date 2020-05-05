@@ -1,6 +1,7 @@
 ul.side-bar
   - var isShop = dest && dest.startsWith('shop')
   - var isAdmin = dest && dest.startsWith('admin')
+  - var isTransaction = dest && dest.startsWith('transaction')
   if isAdmin
     - var subPath = dest.split('/')[1]
     li.side-bar__item
@@ -15,3 +16,11 @@ ul.side-bar
     each category in ["文學","藝術","商業","語言","電腦","旅遊","生活風格","醫學保健","漫畫小說","政府考用","少兒親子"]
       li.side-bar__item
         a(href="/shop/?category="+category class=query===category?'active':'') #{category}
+  if isTransaction
+    - var subPath = dest.split('/')[1]
+    li.side-bar__item
+      a(href="/admin/add-product" class=subPath==="add-product"?'active': '') 收到兌換
+    li.side-bar__item
+      a(href="/admin/products" class=subPath==="products"?'active': '') 提出兌換
+    li.side-bar__item
+      a(href="/admin/products" class=subPath==="products"?'active': '') 兌換紀錄
