@@ -37,9 +37,12 @@
 
     width: 50%;
     display: inline-block;
-    &__price,
-    &__isbn,
-    &__author {
+    &__title {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    &__item {
       padding-top: 0.5rem;
       font-size: $font-medium;
       color: $dark;
@@ -50,5 +53,10 @@
       color: $dark-gray;
       font-size: $font-small;
     }
+  }
+  .action {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
   }
 }

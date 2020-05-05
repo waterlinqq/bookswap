@@ -16,7 +16,8 @@ exports.getProduct = async (req, res, next) => {
   const prod = await Product.findByPk(id).catch(console.log);
   if (prod == null) return res.redirect("/shop/").catch(console.log);
   const messages = await prod.getMessages().catch(console);
-  res.render(dest, { prod, dest, messages });
+  const user = await prod.getUser();
+  res.render(dest, { prod, dest, messages, seller: user });
 };
 
 exports.getFavorites = async (req, res, next) => {

@@ -49,6 +49,9 @@ a {
     border: none;
     border: 1px solid #aaa;
     background-color: transparent;
+    &[disabled] {
+      color: $light-gray;
+    }
   }
   textarea {
     height: 70px;

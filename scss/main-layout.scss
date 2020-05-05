@@ -33,6 +33,28 @@
       backdrop-filter: brightness(50%);
     }
   }
+  .search {
+    position: relative;
+    padding-top: 3px;
+    margin-right: 1rem;
+    height: 40px;
+    svg {
+      position: absolute;
+      height: 16px;
+      left: 5px;
+      top: 10px;
+    }
+    input {
+      height: 26px;
+      border: none;
+      outline: none;
+      text-indent: 25px;
+      border-radius: 2px;
+    }
+    button {
+      display: none;
+    }
+  }
 }
 .main {
   height: calc(100vh - 40px);

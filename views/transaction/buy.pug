@@ -1,0 +1,70 @@
+extends ../layouts/main-layout.pug
+block styles
+  link(rel="stylesheet", href="/css/buy.css")
+block content
+  main 
+    h1 提出兌換
+    include ../includes/error-message.pug
+    form.buy-form(action="/transaction/buy", method="POST")
+      include ../includes/token-input.pug
+      .form-control
+        label(for="title") 書名
+        input(
+          type="text"  
+          id="title"
+          value=prod.title
+          disabled
+        )
+      .form-control
+        label(for="price") 換幣
+        input(
+          type="text"  
+          id="price"
+          value=prod.price
+          disabled
+        )
+      .form-control
+        label(for="seller") 賣家
+        input(
+          type="text"
+          id="seller"
+          value=seller.email
+          disabled
+        )
+      .form-control
+        label(for="buyer") 買家
+        input(
+          type="text"
+          id="buyer"
+          value=user.email
+          disabled
+        )
+      .form-control
+        label(for="delivery") 交易方式
+        select(id="delivery" )
+          option(value="post") 郵寄
+          option(value="conveninet") 超商
+          option(value="meet") 面交
+          option(value="cargo") 貨運
+      .form-control
+        label(for="place") 目的地
+        input(
+          type="text"
+          id="buyer"
+          value=value.place
+        )
+      .form-control
+        label(for="time") 接受時間
+        input(
+          type="text"
+          id="time"
+          value=value.time
+        )
+      .form-control
+        label(for="mark") 備註
+        textarea(
+          type="text"
+          id="mark"
+          value=value.mark
+        )
+      button.btn(type="submit") 送出
