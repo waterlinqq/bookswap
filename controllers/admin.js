@@ -108,7 +108,8 @@ exports.postUser = async (req, res, next) => {
   user.username = username;
   user.description = description;
   user.city = city;
-  user.delivery = JSON.stringify(delivery);
+  //  delivery is a  string instead of an array when it has only one value
+  user.delivery = JSON.stringify([].concat(delivery));
   await user.save();
   return res.redirect("/admin");
 };
