@@ -95,11 +95,12 @@ Product.belongsToMany(Favorite, { through: FavoriteItem });
 Message.belongsTo(Product);
 Product.hasMany(Message);
 
-Transaction.belongsTo(User, { foreignKey: "buyer" });
-Transaction.belongsTo(User, { foreignKey: "seller" });
+Transaction.belongsTo(User, { as: "buyer", foreignKey: "buyerId" });
+Transaction.belongsTo(User, { as: "seller", foreignKey: "sellerId" });
+Transaction.belongsTo(Product, { foreignKey: "productId" });
 
-User.hasMany(Transaction, { as: "buy", foreignKey: "buyer" });
-User.hasMany(Transaction, { as: "sell", foreignKey: "seller" });
+User.hasMany(Transaction, { as: "buy", foreignKey: "buyerId" });
+User.hasMany(Transaction, { as: "sell", foreignKey: "sellerId" });
 
 sequelize
   .sync()

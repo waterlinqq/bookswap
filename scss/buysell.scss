@@ -1,0 +1,49 @@
+@import "./config";
+main {
+  .main-table {
+    // height: 100%;
+    @include box-shadow;
+    @include round-border;
+    background-color: $light;
+    max-width: 800px;
+    padding: 1rem 2rem;
+    margin: 2rem auto;
+    table {
+      text-align: center;
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 1rem;
+      // border: 1px solid $light-gray;
+      tr {
+        background-color: $white;
+        &:hover > td {
+          border-color: $primary-color;
+          border-width: 1.5px;
+          cursor: pointer;
+        }
+        // height: 100px;
+      }
+      td,
+      th {
+        padding: 0.5rem 0;
+        border-top: 1.5px solid $light-gray;
+        border-bottom: 1.5px solid $light-gray;
+      }
+      td:first-of-type,
+      th:first-of-type {
+        border-left: 1.5px solid $light-gray;
+      }
+      td:last-of-type,
+      th:last-of-type {
+        border-right: 1.5px solid $light-gray;
+      }
+    }
+    .product {
+      &__img {
+        padding: 2px;
+        max-height: 100px;
+        max-width: 100px;
+      }
+    }
+  }
+}

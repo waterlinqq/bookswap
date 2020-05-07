@@ -17,11 +17,11 @@ const Transaction = sequelize.define("transaction", {
     type: Sequelize.STRING,
     defaultValue: "0",
   },
-  buyer: {
+  buyerId: {
     type: Sequelize.STRING,
     allowNull: false,
   },
-  seller: {
+  sellerId: {
     type: Sequelize.STRING,
     allowNull: false,
   },

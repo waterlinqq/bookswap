@@ -17,10 +17,9 @@ ul.side-bar
       li.side-bar__item
         a(href="/shop/?category="+category class=query===category?'active':'') #{category}
   if isTransaction
-    - var subPath = dest.split('/')[1]
     li.side-bar__item
-      a(href="/admin/add-product" class=subPath==="add-product"?'active': '') 收到兌換
+      a(href="/transaction" class=sub==="index"?'active': '') 兌換紀錄
     li.side-bar__item
-      a(href="/admin/products" class=subPath==="products"?'active': '') 提出兌換
+      a(href="/transaction/sell" class=sub==="sell"?'active': '') 收到兌換
     li.side-bar__item
-      a(href="/admin/products" class=subPath==="products"?'active': '') 兌換紀錄
+      a(href="/transaction/buy" class=sub==="buy"?'active': '') 提出兌換
