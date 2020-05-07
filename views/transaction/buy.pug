@@ -5,7 +5,7 @@ block content
   main 
     h1 提出兌換
     include ../includes/error-message.pug
-    form.buy-form(action="/transaction/buy", method="POST")
+    form.buy-form(action="/transaction/buy/"+prod.id, method="POST")
       include ../includes/token-input.pug
       .form-control
         label(for="title") 書名
@@ -41,7 +41,7 @@ block content
         )
       .form-control
         label(for="delivery") 交易方式
-        select(id="delivery" )
+        select(id="delivery" name="delivery")
           option(value="post") 郵寄
           option(value="conveninet") 超商
           option(value="meet") 面交
@@ -50,7 +50,8 @@ block content
         label(for="place") 目的地
         input(
           type="text"
-          id="buyer"
+          id="place"
+          name="place"
           value=value.place
         )
       .form-control
@@ -58,6 +59,7 @@ block content
         input(
           type="text"
           id="time"
+          name="time"
           value=value.time
         )
       .form-control
@@ -65,6 +67,7 @@ block content
         textarea(
           type="text"
           id="mark"
+          name="mark"
           value=value.mark
         )
       button.btn(type="submit") 送出

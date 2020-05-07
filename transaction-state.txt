@@ -1,0 +1,11 @@
+0: waiting 
+1: approved
+2: finished
+3: cancelled
+
+
+product 
+0: selling
+1: under transaction
+2: sold out 
+
