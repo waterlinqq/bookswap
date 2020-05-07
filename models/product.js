@@ -28,6 +28,10 @@ const Product = sequelize.define("product", {
     type: Sequelize.STRING,
     allowNull: false,
   },
+  state: {
+    type: Sequelize.STRING,
+    defaultValue: "0",
+  },
 });
 
 module.exports = Product;
