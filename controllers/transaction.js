@@ -1,16 +1,16 @@
 const Product = require("../models/product");
 const Transaction = require("../models/transaction");
 
-exports.getBuy = async (req, res, next) => {
-  const dest = "transaction/buy";
+exports.getOrder = async (req, res, next) => {
+  const dest = "transaction/order";
   const productId = req.params.productId;
   const prod = await Product.findByPk(productId).catch(console.log);
   if (prod == null) return res.redirect("/shop/");
   const seller = await prod.getUser().catch(console.log);
-  res.render("transaction/buy", { prod, seller, dest });
+  res.render("transaction/order", { prod, seller, dest });
 };
 
-exports.postBuy = async (req, res, next) => {
+exports.postOrder = async (req, res, next) => {
   const productId = req.params.productId;
   const { delivery, place, time, mark } = req.body;
   const prod = await Product.findByPk(productId).catch(console.log);

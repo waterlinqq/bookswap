@@ -24,7 +24,7 @@ block content
         p.info__item 交易方式：#{JSON.parse(seller.delivery).join('')}
         p.info__description #{prod.description}
       .action
-        a.btn(href="/transaction/buy/"+prod.id) 提出兌換
+        a.btn(href="/transaction/order/"+prod.id) 提出兌換
         include ../includes/add-favorite.pug
     section
       include ../includes/message.pug

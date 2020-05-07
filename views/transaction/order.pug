@@ -1,11 +1,11 @@
 extends ../layouts/main-layout.pug
 block styles
-  link(rel="stylesheet", href="/css/buy.css")
+  link(rel="stylesheet", href="/css/order.css")
 block content
   main 
     h1 提出兌換
     include ../includes/error-message.pug
-    form.buy-form(action="/transaction/buy/"+prod.id, method="POST")
+    form.order-form(action="/transaction/order/"+prod.id, method="POST")
       include ../includes/token-input.pug
       .form-control
         label(for="title") 書名

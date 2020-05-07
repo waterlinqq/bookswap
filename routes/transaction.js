@@ -5,8 +5,8 @@ const isAuth = require("../middleware/is-auth");
 
 const router = express.Router();
 
-router.get("/buy/:productId", isAuth, transActionController.getBuy);
-router.post("/buy/:productId", isAuth, transActionController.postBuy);
+router.get("/order/:productId", isAuth, transActionController.getOrder);
+router.post("/order/:productId", isAuth, transActionController.postOrder);
 router.get("/", isAuth, transActionController.getIndex);
 
 module.exports = router;
