@@ -149,3 +149,27 @@ exports.getIndex = async (req, res, next) => {
     .sort((a, b) => (a.updatedAt > b.updatedAt ? 1 : -1));
   res.render(dest, { trans, dest, sub: "index" });
 };
+
+exports.postCancel = async (req, res, next) => {
+  const transactionId = req.params.transactionId;
+  const tran = await Transaction.findByPk(transactionId);
+  if (tran == null) return res.redirect("/transaction/");
+  if (tran.sellerId == req.user.id) {
+    tran.state = "4";
+  } else if (tran.buyerId == req.user.id) {
+    tran.state = "3";
+  } else {
+    return res.redirect("/transaction/");
+  }
+  await tran.save();
+  res.redirect("/transaction");
+};
+
+exports.postAgree = async (req, res, next) => {
+  const { transactionId } = req.params;
+  const [tran] = await req.user.getSell({ where: { id: transactionId } });
+  if (tran == null) return res.redirect("/transaction/");
+  tran.state = "1";
+  await tran.save();
+  res.redirect("/transaction/");
+};

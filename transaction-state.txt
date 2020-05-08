@@ -1,7 +1,8 @@
 0: waiting 
 1: approved
 2: finished
-3: cancelled
+3: buyer-cancelled
+4: seller-cancelled
 
 
 product 
