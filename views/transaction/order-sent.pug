@@ -1,0 +1,69 @@
+extends ../layouts/main-layout.pug
+block styles
+  link(rel="stylesheet", href="/css/order.css")
+block content
+  main 
+    h1 兌換資訊
+    include ../includes/error-message.pug
+    h3.state 訂單狀態： #{['待同意','已同意','已完成','已取消'][tran.state]}
+    - var prod = tran.product
+    - var buyer = tran.buyer 
+    - var seller = tran.seller
+    .form-control
+      label 書名
+      input(
+        type="text"  
+        value=prod.title
+        disabled
+      )
+    .form-control
+      label 換幣
+      input(
+        type="text"  
+        value=tran.price
+        disabled
+      )
+    .form-control
+      label 賣家
+      input(
+        type="text"
+        value=seller.email
+        disabled
+      )
+    .form-control
+      label 買家
+      input(
+        type="text"
+        value=buyer.email
+        disabled
+      )
+    .form-control
+      label 交易方式
+      select(value=tran.delivery disabled)
+        option(value="post") 郵寄
+        option(value="conveninet") 超商
+        option(value="meet") 面交
+        option(value="cargo") 貨運
+    .form-control
+      label 目的地
+      input(
+        type="text"
+        value=tran.place
+        disabled
+      )
+    .form-control
+      label 接受時間
+      input(
+        type="text"
+        value=tran.time
+        disabled
+      )
+    .form-control
+      label 備註
+      textarea(
+        disabled
+      ) #{tran.mark}
+    .action 
+      form(action="/transaction/cancel" + tran.id, method="POST")
+        button.btn.fav 取消
+        include ../includes/token-input.pug

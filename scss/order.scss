@@ -1,5 +1,7 @@
 @import "./config";
 main {
+  max-width: 500px;
+  margin: 2rem auto;
   h1 {
     text-align: center;
     font-size: $font-large;
@@ -7,8 +9,14 @@ main {
     margin: 0;
     margin: 2rem;
   }
-  .order-form {
-    max-width: 500px;
-    margin: 2rem auto;
+  .action {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .state {
+    font-size: $font-medium;
+    color: $secondary-color;
+    padding-bottom: 1rem;
   }
 }

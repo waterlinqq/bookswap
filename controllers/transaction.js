@@ -82,6 +82,38 @@ exports.getBuy = async (req, res, next) => {
   res.render(dest, { trans, dest, sub: "buy" });
 };
 
+exports.getOrderDetail = async (req, res, next) => {
+  let dest;
+  const transactionId = req.params.transactionId;
+  const tran = await Transaction.findByPk(transactionId, {
+    include: [
+      {
+        model: User,
+        as: "seller",
+        attributes: ["email"],
+      },
+      {
+        model: User,
+        as: "buyer",
+        attributes: ["email"],
+      },
+      {
+        model: Product,
+        attributes: ["title"],
+      },
+    ],
+  });
+  if (tran == null) return res.redirect("/transaction/");
+  if (tran.buyerId == req.user.id) {
+    dest = "transaction/order-sent";
+  } else if (tran.sellerId == req.user.id) {
+    dest = "transaction/order-recieved";
+  } else {
+    return res.redirect("/transaction/");
+  }
+  res.render(dest, { tran, dest });
+};
+
 exports.getIndex = async (req, res, next) => {
   const dest = "transaction/buysell";
   const buys = await req.user.getBuy({
