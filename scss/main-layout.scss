@@ -67,7 +67,8 @@
   &__content {
     flex-grow: 1;
   }
-  main {
+  .main__content {
+    padding: 2rem;
     height: 100%;
     overflow: scroll;
   }
