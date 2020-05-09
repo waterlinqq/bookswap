@@ -68,10 +68,6 @@ block content
         form(action="/transaction/agree/"+ tran.id  method="POST" )
           button.btn 接受
           include ../includes/token-input.pug
-      if(tran.state == '1') 
-        form(action="/transaction/finish/"+ tran.id  method="POST" )
-          button.btn 完成
-          include ../includes/token-input.pug
       if(tran.state == '0' || tran.state == '1')
         form(action="/transaction/cancel/" + tran.id, method="POST")
           button.btn.fav 取消

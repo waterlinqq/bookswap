@@ -13,4 +13,5 @@ router.get("/:transactionId", isAuth, transActionController.getOrderDetail);
 router.get("/", isAuth, transActionController.getIndex);
 router.post("/cancel/:transactionId", isAuth, transActionController.postCancel);
 router.post("/agree/:transactionId", isAuth, transActionController.postAgree);
+router.post("/finish/:transactionId", isAuth, transActionController.postFinish);
 module.exports = router;

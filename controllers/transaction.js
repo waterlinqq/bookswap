@@ -173,3 +173,12 @@ exports.postAgree = async (req, res, next) => {
   await tran.save();
   res.redirect("/transaction/");
 };
+
+exports.postFinish = async (req, res, next) => {
+  const { transactionId } = req.params;
+  const [tran] = await req.user.getBuy({ where: { id: transactionId } });
+  if (tran == null) return res.redirect("/transaction/");
+  tran.state = "2";
+  await tran.save();
+  res.redirect("/transaction/");
+};
