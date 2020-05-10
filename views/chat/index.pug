@@ -1,0 +1,17 @@
+extends ../layouts/main-layout.pug
+block scripts
+  script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js")
+  script(src="/js/chat.js" defer)
+block styles
+  link(rel="stylesheet", href="/css/chat.css")
+block content
+  main
+    input#chatid(value=chatId hidden)
+    input#from(value=user.id hidden)
+    input#to(value=userId hidden)
+    #messages
+      each chat in chats
+        div(class=user.id == chat.from ? 'right' : 'left')
+          p #{chat.content}
+    textarea#text(cols="10")
+
