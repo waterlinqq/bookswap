@@ -15,15 +15,18 @@ const adminRouter = require("./routes/admin");
 const authRouter = require("./routes/auth");
 const errorRouter = require("./routes/error");
 const transactionRouter = require("./routes/transaction");
+const chatRouter = require("./routes/chat");
 const Product = require("./models/product");
 const User = require("./models/user");
 const Favorite = require("./models/favorite");
 const FavoriteItem = require("./models/favorite-item");
 const Message = require("./models/message");
 const Transaction = require("./models/transaction");
+const Chat = require("./models/chat");
 const getUser = require("./middleware/user");
 const getToken = require("./middleware/token");
 const getDefault = require("./middleware/default");
+const socket = require("./socket");
 
 const app = express();
 const storage = multer.diskStorage({
@@ -74,6 +77,7 @@ app.use(getDefault);
 app.use("/shop", shopRouter);
 app.use("/admin", adminRouter);
 app.use("/transaction", transactionRouter);
+app.use("/chat", chatRouter);
 app.use(authRouter);
 
 app.get("/", (req, res, next) => {
@@ -102,11 +106,12 @@ Transaction.belongsTo(Product, { foreignKey: "productId" });
 User.hasMany(Transaction, { as: "buy", foreignKey: "buyerId" });
 User.hasMany(Transaction, { as: "sell", foreignKey: "sellerId" });
 
+User.hasMany(Chat, { as: "send", foreignKey: "from" });
+User.hasMany(Chat, { as: "recieve", foreignKey: "to" });
+
 sequelize
   .sync()
   // .sync({ force: true })
-  // .then(() => User.findByPk(1))
-  // .then((user) => user || User.create({ name: "Tom", email: "test@test.com" }))
-  // .then((user) => user.createFavorite())
   .then(() => app.listen(3001))
+  .then(socket.init)
   .catch(console.log);
