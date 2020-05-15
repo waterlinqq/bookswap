@@ -109,6 +109,9 @@ User.hasMany(Transaction, { as: "sell", foreignKey: "sellerId" });
 User.hasMany(Chat, { as: "send", foreignKey: "from" });
 User.hasMany(Chat, { as: "recieve", foreignKey: "to" });
 
+Chat.belongsTo(User, { as: "sendBy", foreignKey: "from" });
+Chat.belongsTo(User, { as: "recievedBy", foreignKey: "to" });
+
 sequelize
   .sync()
   // .sync({ force: true })

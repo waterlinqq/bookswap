@@ -2,6 +2,7 @@ ul.side-bar
   - var isShop = dest && dest.startsWith('shop')
   - var isAdmin = dest && dest.startsWith('admin')
   - var isTransaction = dest && dest.startsWith('transaction')
+  - var isChat = dest && dest.startsWith('chat')
   if isAdmin
     - var subPath = dest.split('/')[1]
     li.side-bar__item
@@ -23,3 +24,9 @@ ul.side-bar
       a(href="/transaction/sell" class=sub==="sell"?'active': '') 收到兌換
     li.side-bar__item
       a(href="/transaction/buy" class=sub==="buy"?'active': '') 提出兌換
+  if isChat
+    each msg in recent 
+      -var chatWith = +msg.from === user.id ? msg.recievedBy : msg.sendBy
+      li.side-bar__item
+        a(href="/chat/"+chatWith.id) 
+          small #{chatWith.email}

@@ -9,9 +9,10 @@ block content
     input#chatid(value=chatId hidden)
     input#from(value=user.id hidden)
     input#to(value=userId hidden)
-    #messages
-      each chat in chats
-        div(class=user.id == chat.from ? 'right' : 'left')
-          p #{chat.content}
-    textarea#text(cols="10")
+    .container
+      #messages
+        each chat in chats
+          div(class=user.id == chat.from ? 'right' : 'left')
+            p(title=chat.createdAt) #{chat.content}
+      textarea#text(cols="10" placeholder='Aa')
 

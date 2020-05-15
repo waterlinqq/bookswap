@@ -84,6 +84,7 @@
     font-size: $font-medium;
     a {
       display: block;
+      width: 150px;
       padding: 0.5rem;
       color: $primary-color;
       &:hover,
@@ -91,6 +92,9 @@
         background-color: $primary-color;
         color: set-text-color($primary-color);
       }
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
     }
   }
 }
