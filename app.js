@@ -89,7 +89,7 @@ app.use((error, req, res, next) => {
   console.error(error);
   res.status(500).render("error/500");
 });
-
+// step 1
 Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
 User.hasMany(Product);
 User.hasOne(Favorite);
@@ -98,7 +98,7 @@ Favorite.belongsToMany(Product, { through: FavoriteItem });
 Product.belongsToMany(Favorite, { through: FavoriteItem });
 Message.belongsTo(Product);
 Product.hasMany(Message);
-
+// step 2
 Transaction.belongsTo(User, { as: "buyer", foreignKey: "buyerId" });
 Transaction.belongsTo(User, { as: "seller", foreignKey: "sellerId" });
 Transaction.belongsTo(Product, { foreignKey: "productId" });

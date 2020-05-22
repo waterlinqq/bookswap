@@ -1,0 +1,9 @@
+block sidebar
+  .h-100.bg-white.border-right(style="box-shadow:0px 2px 5px rgba(0,0,0,0.2)")
+    ul.nav.flex-column(style="width:200px")
+      li.nav-item
+        a.nav-link(href="/transaction" class=sub==="index"?'text-secondary': '') 兌換紀錄
+      li.nav-item
+        a.nav-link(href="/transaction/sell" class=sub==="sell"?'text-secondary': '') 收到兌換
+      li.nav-item
+        a.nav-link(href="/transaction/buy" class=sub==="buy"?'text-secondary': '') 提出兌換

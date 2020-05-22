@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-html(lang="en")
+html.vh-100(lang="en")
     head
         meta(charset="UTF-8")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
@@ -7,35 +7,46 @@ html(lang="en")
         title #{pageTitle}
         link(rel="stylesheet", href="/css/main.css")
         link(rel="stylesheet", href="/css/main-layout.css")
+        link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css")
+        script(src="https://code.jquery.com/jquery-3.5.1.slim.js")
+        script(src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js")
         block styles
         block scripts
-    body   
-        header.main-header
-            nav.main-header__nav
-                ul.main-header__item-list
-                    li.main-header__item
-                        a(href="/shop") 書店
-                    li.main-header__item
-                        a(href="/admin") 用戶
-                    li.main-header__item
-                        a(href="/transaction") 交易
-                    li.main-header__item
-                        a(href="/chat") 訊息
-                ul.main-header__item-list
+    body.vh-100
+        .vh-100.d-flex.flex-column
+          header
+            nav.navbar.navbar-expand-md.navbar-dark.bg-primary
+              a.navbar-brand(href="#") 換書網
+              button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbar")
+                span.navbar-toggler-icon
+              #navbar.collapse.navbar-collapse
+                ul.navbar-nav.mr-auto
+                    li.nav-item
+                        a.nav-link(href="/shop") 書店
+                    if(user)
+                      li.nav-item
+                        a.nav-link(href="/admin") 用戶
+                      li.nav-item
+                        a.nav-link(href="/transaction") 交易
+                      li.nav-item
+                        a.nav-link(href="/chat") 訊息
+                ul.navbar-nav.ml-auto
                   include ../includes/search.pug
                   if user 
-                    li.main-header__item
+                    li.nav-item
                       form(action="/logout" method="POST")
                         include ../includes/token-input.pug
-                        button(type="submit") 登出
-                   
+                        button.btn.btn-link.nav-link(type="submit") 登出
+                  
                   else
-                    li.main-header__item
-                      a(href="/login") 登入
-                    li.main-header__item
-                      a(href="/signup") 註冊
-        .main
-          .main__content
-            block content
-          .main__side-bar
-            include ../includes/side-bar.pug
+                    li.nav-item
+                      a.nav-link(href="/login") 登入
+                    li.nav-item
+                      a.nav-link(href="/signup") 註冊
+          main.flex-grow-1.bg-light.d-md-flex.overflow-auto
+            div.align-self-stretch(style="max-width:180px")
+              block sidebar
+            .flex-grow-1.p-4.overflow-auto
+              block content
+          //- .main__side-bar
+          //-   include ../includes/side-bar.pug

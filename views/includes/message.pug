@@ -1,15 +1,24 @@
-section 
-  ul.message-list
-    h3 留言
-    br
-    each message in messages 
-      li.message-list__item
-        .message
-          p.message__user #{message.user}:
-          p.message__content #{message.content}
-          p.message__time #{message.createdAt}
-    form(action="/shop/"+ prod.id method="POST")
-      include ./token-input.pug
-      .form-control
-        textarea(name="content" placeholder="寫些什麼...")
-      button.btn(type="submit") 送出
+section.mt-5
+  .container
+    h3 留言：
+    hr
+    ul.list-unstyled
+      each message in messages 
+        li.media
+          img.mr-3(
+            height="64"
+            width="64"
+            src=message.userImg || '/system/default-user.jpg')
+          .media-body
+            h5.mt-0.mb-1 #{message.user}
+            p #{message.content}
+            p.text-right.text-muted #{message.createdAt}
+      form(action="/shop/"+ prod.id method="POST")
+        include ./token-input.pug
+        .form-group
+          textarea.form-control(
+            name="content"
+            required
+            placeholder="寫些什麼..."
+          )
+        button.btn.btn-primary(type="submit") 送出

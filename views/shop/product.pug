@@ -1,30 +1,53 @@
 extends ../layouts/main-layout.pug
-block styles 
-  link(rel="stylesheet", href="/css/product.css")
-  link(rel="stylesheet", href="/css/message.css")
+block scripts
+  script(src="/js/product.js")
+include ../includes/shop-sidebar.pug 
 block content 
-  main
-    section.product
-      .image
-        .image__thumb
-          each url in JSON.parse(prod.url)
-            img(src='/images/'+url alt=prod.title)
-        .image__main
-          img(src='/images/'+ JSON.parse(prod.url)[0] alt=prod.title)
-      .info
-        .info__title
-          h1(title=prod.title) #{prod.title}
-          span.info__category #{prod.category}
-        hr
-        p.info__item 換幣：#{prod.price}
-        p.info__item 作者：#{prod.author}
-        p.info__item ISBN：#{prod.isbn}
-        p.info__item 賣家：#{seller.email}
-        p.info__item 城市：#{seller.city}
-        p.info__item 交易方式：#{JSON.parse(seller.delivery).join('')}
-        p.info__description #{prod.description}
-      .action
-        a.btn(href="/transaction/order/"+prod.id) 提出兌換
-        include ../includes/add-favorite.pug
-    section
-      include ../includes/message.pug
+  .text-right.pb-1
+    span.badge.badge-primary #{prod.category}
+  .card
+    .card-header.text-center
+      h2.card-title.trimText #{prod.title}
+    .card-body
+      .card-text.row
+        .col-lg-8
+          #carousel.carousel.slide(data-ride="carousel")
+            .carousel-indicators
+              each url, i in JSON.parse(prod.url)
+                li(data-target="#carouselExampleIndicators", data-slide-to=i)
+            .carousel-inner
+              each url in JSON.parse(prod.url)
+                .carousel-item
+                  img.d-block.w-100(style="height: 300px;object-fit: cover;" src='/images/'+url alt=prod.title)
+            a.carousel-control-prev(href="#carousel" role="button" data-slide="prev")
+              span.carousel-control-prev-icon
+            a.carousel-control-next(href="#carousel" role="button" data-slide="next")
+              span.carousel-control-next-icon
+        .col-lg-4.text-center.py-3
+          h5.pb-2 商品資訊
+          .table-responsive
+            table.table.borderless 
+              tbody
+                tr
+                  td 換幣
+                  td #{prod.price}
+                tr
+                  td 作者
+                  td #{prod.author}
+                tr
+                  td ISBN
+                  td #{prod.isbn}
+                tr
+                  td 賣家
+                  td #{seller.email}
+                tr
+                  td 城市
+                  td #{seller.city}
+                tr
+                  td 交易方式
+                  td #{JSON.parse(seller.delivery).join('')}
+    .card-footer.d-flex.justify-content-end
+      a.btn.btn-primary(href="/transaction/order/"+prod.id) 提出兌換
+      include ../includes/add-favorite.pug
+  section
+    include ../includes/message.pug

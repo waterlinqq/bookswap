@@ -1,19 +1,20 @@
 extends ../layouts/main-layout.pug
 block styles
-  link(rel="stylesheet", href="/css/shop.css")
+  //- link(rel="stylesheet", href="/css/shop.css")
+include ../includes/shop-sidebar.pug 
 block content 
+
   main 
     if prods.length
-      .grid      
+      .d-flex.flex-wrap      
         each prod in prods  
-          article.card.product
-            .card__image 
-              img(src='/images/' + JSON.parse(prod.url)[0]) 
-              //- img(src=prod.url) 
-            .card__content 
-              h1.product__title(title=prod.title) #{prod.title}
-              .card__actions
-                a.btn(href=`/shop/${prod.id}`) 詳情
+          div.card.m-2(style="width: 15rem;")
+            img.card-img-top.img-cover(src='/images/' + JSON.parse(prod.url)[0]) 
+            .card-body 
+              h5.card-title.trimText(title=prod.title) #{prod.title}
+              p.card-text.text-secondary.trimText #{prod.description}
+              .d-flex.justify-content-end
+                a.btn.btn-primary(href=`/shop/${prod.id}`) 詳情
                 include ../includes/add-favorite.pug
     else 
-      h1 尚無書籍
+      h5 尚無書籍

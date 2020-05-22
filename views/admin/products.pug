@@ -1,26 +1,24 @@
 extends ../layouts/main-layout.pug
-block styles 
-  link(rel="stylesheet", href="/css/admin-products.css")
+include ../includes/admin-sidebar.pug
 block content 
   main 
     if prods.length
-      .grid      
+      .d-flex.flex-wrap           
         each prod in prods  
-          article.card.product
-            .card__image 
-              img(src='/images/' +JSON.parse(prod.url)[0]) 
-            .card__info 
-              h1.product__title #{prod.title}
-              p.product__price 換幣：#{prod.price}
-              p.product__author 作者：#{prod.author}
-              p.product__category 類別：#{prod.category}
-            .card__description
-              p.product__description(style="-webkit-box-orient: vertical") #{prod.description} 
-            .card__actions
-                a.btn(href=`/admin/edit-product/${prod.id}`) 編輯
+          div.card.m-2(style="width: 15em")
+            img.card-img-top.img-cover( src='/images/' +JSON.parse(prod.url)[0]) 
+            .card-body 
+              h5.card-title.trimText #{prod.title}
+              div.card-text
+                span.d-block 換幣：#{prod.price}
+                span.d-block.trimText 作者：#{prod.author} 
+                span.d-block 類別：#{prod.category}
+                p.mt-1.text-secondary.trimText(style="-webkit-box-orient: vertical") #{prod.description} 
+              .d-flex.justify-content-end
+                a.btn.btn-primary(href=`/admin/edit-product/${prod.id}`) 編輯
                 form(action="/admin/delete-product", method="POST")
                   include ../includes/token-input.pug
                   input(type="hidden" value=prod.id name="productId")
-                  button.btn(type="submit") 刪除
+                  button.ml-3.btn.btn-outline-danger(type="submit") 刪除
     else
-      h1 尚無書籍
+      h5 尚無書籍

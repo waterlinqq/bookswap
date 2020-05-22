@@ -1,0 +1,12 @@
+block sidebar
+  - var subPath = dest.split('/')[1]
+  .h-100.bg-white.border-right(style="box-shadow:0px 2px 5px rgba(0,0,0,0.2)")
+    ul.nav.flex-column(style="width:200px")
+      li.nav-item
+        a.nav-link(href="/admin/add-product" class=subPath==="add-product"?'text-secondary': '') 新增書籍
+      li.nav-item
+        a.nav-link(href="/admin/products" class=subPath==="products"?'text-secondary': '') 我的書籍
+      li.nav-item
+        a.nav-link(href="/shop/favorites" class=subPath==="favorites"?'text-secondary': '') 我的收藏
+      li.nav-item
+        a.nav-link(href="/admin/user" class=subPath==="user"?'text-secondary': '') 用戶管理

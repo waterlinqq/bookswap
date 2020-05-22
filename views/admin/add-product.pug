@@ -1,81 +1,86 @@
 extends ../layouts/main-layout.pug
-block styles 
-  link(rel="stylesheet", href="/css/add-product.css")
+include ../includes/admin-sidebar.pug
 block content
-  include ../includes/error-message.pug
-  form.product-form(action="/admin/add-product", method="post", enctype="multipart/form-data")
-    include ../includes/token-input.pug
-    .form-control
-      label.must-fill(for="title") 書名
-      input(
-        type="text"
-        name="title"
-        id="title"
-        value=value.title
-        class=errorParam == "title" ? 'invalid': ''
-      )
-    .form-control
-      label.must-fill(for="author") 作者 
-      input(
-        type="text"
-        name="author"
-        id="author"
-        value=value.author
-        class=errorParam == "author" ? 'invalid': ''
-      )
-    .form-control
-      label.must-fill(for="isbn") ISBN 
-      input(
-        type="text"
-        name="isbn"
-        id="isbn"
-        value=value.isbn
-        class=errorParam == "isbn" ? 'invalid': ''
-      )
-    .form-control
-      label(for="category") 類別 
-      select(
-        name="category"
-        id="category"
-        value=value.category
-        class=errorParam == "category" ? 'invalid': ''
-      )
-        option(value="藝術") 藝術
-        option(value="商業") 商業
-        option(value="語言") 語言
-        option(value="電腦") 電腦
-        option(value="旅遊") 旅遊
-        option(value="生活風格") 生活風格
-        option(value="醫學保健") 醫學保健
-        option(value="漫畫小說") 漫畫小說
-        option(value="政府考用") 政府考用
-        option(value="少兒親子") 少兒親子
-    .form-control
-      label(for="images") 圖片
-      input(
-        multiple
-        type="file"
-        name="images"
-        id="images"
-        class=errorParam == "images" ? 'invalid': ''
-      )
-    .form-control
-      label.must-fill(for="price") 換幣
-      input(
-        type="number"
-        name="price"
-        id="price"
-        value=value.price
-        class=errorParam == "price" ? 'invalid': ''
-      )
-    .form-control
-      label(for="description") 細節
-      textarea(
-        cols="30"
-        rows="10"
-        name="description"
-        id="description"
-        class=errorParam == "description" ? 'invalid': ''
-      ) #{value.description}
-    button.btn(type="submit") 送出
-  script(src="/js/add-product.js")
+  .container
+    .row 
+      .col-md-8.mx-auto
+        include ../includes/error-message.pug
+        form.product-form(action="/admin/add-product", method="post", enctype="multipart/form-data")
+          include ../includes/token-input.pug
+          .form-group
+            label.must-fill(for="title") 書名
+            input.form-control(
+              type="text"
+              name="title"
+              id="title"
+              required
+              value=value.title
+              class=errorParam == "title" ? 'is-invalid': ''
+            )
+          .form-group
+            label.must-fill(for="author") 作者 
+            input.form-control(
+              type="text"
+              name="author"
+              id="author"
+              required
+              value=value.author
+              class=errorParam == "author" ? 'is-invalid': ''
+            )
+          .form-group
+            label.must-fill(for="isbn") ISBN 
+            input.form-control(
+              type="text"
+              name="isbn"
+              id="isbn"
+              required
+              value=value.isbn
+              class=errorParam == "isbn" ? 'is-invalid': ''
+            )
+          .form-group
+            label(for="category") 類別 
+            select.form-control(
+              name="category"
+              id="category"
+              value=value.category
+              class=errorParam == "category" ? 'is-invalid': ''
+            )
+              option(value="藝術") 藝術
+              option(value="商業") 商業
+              option(value="語言") 語言
+              option(value="電腦") 電腦
+              option(value="旅遊") 旅遊
+              option(value="生活風格") 生活風格
+              option(value="醫學保健") 醫學保健
+              option(value="漫畫小說") 漫畫小說
+              option(value="政府考用") 政府考用
+              option(value="少兒親子") 少兒親子
+          .form-group
+            label(for="images") 圖片
+            input.form-control-file(
+              multiple
+              type="file"
+              name="images"
+              id="images"
+              class=errorParam == "images" ? 'is-invalid': ''
+            )
+          .form-group
+            label.must-fill(for="price") 換幣
+            input.form-control(
+              type="number"
+              name="price"
+              id="price"
+              required
+              value=value.price
+              class=errorParam == "price" ? 'is-invalid': ''
+            )
+          .form-group
+            label(for="description") 細節
+            textarea.form-control(
+              cols="30"
+              rows="10"
+              name="description"
+              id="description"
+              class=errorParam == "description" ? 'is-invalid': ''
+            ) #{value.description}
+          button.btn.btn-primary(type="submit") 送出

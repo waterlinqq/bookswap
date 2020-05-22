@@ -1,29 +1,27 @@
 extends ../layouts/main-layout.pug
-block styles
-  link(rel="stylesheet", href="/css/buysell.css")
+include ../includes/transaction-sidebar.pug
 block content
-  main
-    .main-table 
-      table
-        tr
-          th 圖片
-          th 商品
-          th 對象
-          th 換幣
-          th 狀態
-        each tran in trans
-          - var prod = tran.product
-          - var trader = tran.buyer || tran.seller
-          tr.product.tran(onclick=`location.href = '/transaction/${tran.id}'`)
-            td
-              img.product__img(src='/images/'+JSON.parse(prod.url)[0], alt=prod.title) 
-            td
-              p #{prod.title} 
-              p.product__author #{prod.author}
-            td 
-              p #{trader.email}
-            td
-              p #{tran.price}
-            td
-              p.tran__state #{['待同意','已同意','已完成','買家取消','賣家取消'][tran.state]}
+  table.table.table-hover.text-center
+    thead.thead-light
+      tr
+        th 圖片
+        th 商品
+        th 對象
+        th 換幣
+        th 狀態
+    each tran in trans
+      - var prod = tran.product
+      - var trader = tran.buyer || tran.seller
+      tr.hover(onclick=`location.href = '/transaction/${tran.id}'`)
+        td
+          img.img-cover-sm(src='/images/'+JSON.parse(prod.url)[0], alt=prod.title) 
+        td
+          p #{prod.title} 
+          p.text-muted #{prod.author}
+        td 
+          p #{trader.email}
+        td
+          p #{tran.price}
+        td
+          p.text-danger #{['待同意','已同意','已完成','買家取消','賣家取消'][tran.state]}
 

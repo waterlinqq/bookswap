@@ -1,18 +1,37 @@
 extends ../layouts/main-layout.pug
+include ../includes/chat-sidebar.pug
 block scripts
   script(src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.3.0/socket.io.js")
   script(src="/js/chat.js" defer)
 block styles
-  link(rel="stylesheet", href="/css/chat.css")
+  style 
+    | .bg-light-gray {background-color: #f2f2f2}
+    | .date{display:block; width: 110px}
+    | .content{word-break: break-all}
+  //- link(rel="stylesheet", href="/css/chat.css")
 block content
-  main
-    input#chatid(value=chatId hidden)
-    input#from(value=user.id hidden)
-    input#to(value=userId hidden)
-    .container
-      #messages
+  input#chatid(value=chatId hidden)
+  input#from(value=user.id hidden)
+  input#to(value=userId hidden)
+  .container.row.h-100
+    #messages.bg-white.col-md-8.mx-auto.py-3.h-100.border.d-flex.flex-column
+      h6 #{mate.email}
+      hr
+      #message-container.container.flex-grow-1.overflow-auto
         each chat in chats
-          div(class=user.id == chat.from ? 'right' : 'left')
-            p(title=chat.createdAt) #{chat.content}
-      textarea#text(cols="10" placeholder='Aa')
+          .row.my-3
+            if(user.id == chat.from)
+              .col-8.ml-auto.text-right
+                .d-inline-block
+                  p.px-2.py-1.mb-1.rounded.bg-info.text-white.content.d-inline-block.text-left #{chat.content}
+                  small.date.trimText.text-small.text-muted #{chat.createdAt}
+            else
+              .col-8.mr-auto
+                .d-flex.text-left
+                  img.mr-3.rounded-circle(height="35" width="35" src="/system/default-user.jpg")
+                  .d-inline-block
+                    p.px-2.py-1.mb-1.rounded.bg-light-gray.content.d-inline-block #{chat.content}
+                    small.date.trimText.font-small.text-muted #{chat.createdAt}
+      hr
+      textarea#text.form-control(placeholder='說些什麼' style="height:80px")
 

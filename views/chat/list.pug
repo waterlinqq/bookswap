@@ -1,0 +1,14 @@
+extends ../layouts/main-layout.pug
+include ../includes/chat-sidebar.pug
+block content
+  .container
+    h5 您的訊息
+    hr
+    each msg in recent
+      -var mate = msg.from == user.id ? msg.recievedBy : msg.sendBy
+      a.nav-link(href="/chat/"+ mate.id)
+        .media.bg-white.p-2.border.rounded
+          img.mr-3(height="64s" width="62" src="/system/default-user.jpg")
+          .media-body
+            h5.mt-0 #{mate.email}
+            p.text-secondary #{msg.content}

@@ -77,8 +77,16 @@ exports.postSignup = async (req, res, next) => {
   const msg = {
     to: email,
     from: "a10311036@gmail.com",
-    subject: "註冊成功",
-    html: "<strong>您已成功註冊</strong>",
+    subject: "註冊成功通知信",
+    html: `
+    <div>
+      <center>
+        <strong>您已成功註冊bookswap會員</strong>
+        <p>提示：本網站僅為練習作品，認真你就輸了！</p>
+        <p>請至書店挑選您感興趣的交換書，或是上傳想交換的二手書，祝您交易愉快。</p>
+      </center>
+    </div>
+    `,
   };
   sgMail.send(msg);
 };
@@ -105,10 +113,13 @@ exports.postReset = async (req, res, next) => {
   const msg = {
     to: email,
     from: "a10311036@gmail.com",
-    subject: "密碼重置",
+    subject: "密碼重置確認",
     html: `
-      <p>您發起重置密碼的請求</p>
-      <p>點擊<a href="http://localhost:3001/reset/${token}">這裏</a>進行重置作業</p>
+      <center>
+        <p>您於本網站發起重置密碼的請求，請於ㄧ小時完成密碼重新設定。</p>
+        <p>點擊<a href="http://localhost:3001/reset/${token}">這裏</a>進行重置作業</p>
+        <p>如果您沒有提出此要求，請忽略本信件</p>
+      </center>
       `,
   };
   sgMail.send(msg);
@@ -123,6 +134,9 @@ exports.getNewPassword = async (req, res, next) => {
       resetTokenExpiration: { [Op.gte]: Date.now() },
     },
   });
+  if (user == null) {
+    return res.redirect("/");
+  }
   const [errorMessage] = req.flash("error");
   res.render("auth/new-password", {
     dest,

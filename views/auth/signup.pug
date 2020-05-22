@@ -1,24 +1,39 @@
 extends ../layouts/main-layout.pug
 block styles
-  link(rel="stylesheet", href="/css/signup.css")
+  //- link(rel="stylesheet", href="/css/signup.css")
 block content
-  main 
-    include ../includes/error-message.pug
-    form.signup-form(action="/signup", method="POST")
-      include ../includes/token-input.pug
-      .form-control
-        label(for="email") 信箱
-        input(
-          type="email" 
-          name="email" 
-          id="email"
-          value=value.email
-          class=errorParam == "email" ? 'invalid': ''
-        )
-      .form-control
-        label(for="password") 密碼
-        input(type="password" name="password" id="password")
-      .form-control
-        label(for="confirmPassword") 確認密碼
-        input(type="password" name="confirmPassword" id="confrimPassword")
-      button.btn(type="submit") 送出
+  .container
+    .row
+      .col-md-8.mx-auto
+        include ../includes/error-message.pug
+        form(action="/signup", method="POST")
+          include ../includes/token-input.pug
+          .form-group
+            label(for="email") 信箱
+            input.form-control(
+              type="email" 
+              name="email" 
+              id="email"
+              required
+              value=value.email
+              class=errorParam == "email" ? 'is-invalid': ''
+            )
+          .form-group
+            label(for="password") 密碼
+            input.form-control(
+              type="password"
+              name="password"
+              id="password"
+              required
+            )
+          .form-group
+            label(for="confirmPassword") 確認密碼
+            input.form-control(
+              type="password" 
+              name="confirmPassword"
+              id="confrimPassword"
+              required
+            )
+          .d-flex.justify-content-end
+            button.btn.btn-primary(type="submit") 送出
+        

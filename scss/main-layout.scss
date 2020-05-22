@@ -1,100 +1,131 @@
 @import "config";
 
-.main-header {
-  font-size: $font-medium;
-  height: 40px;
-  &__nav {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-  }
-  background-color: $primary-color;
+// .main-header {
+//   font-size: $font-medium;
+//   height: 40px;
+//   &__nav {
+//     display: flex;
+//     justify-content: space-between;
+//     flex-direction: row;
+//   }
+//   background-color: $primary-color;
 
-  &__item-list {
-    display: flex;
-    flex-direction: row;
-  }
-  &__item {
-    padding: 0 1rem;
-    line-height: 40px;
-    list-style: none;
-    a {
-      color: set-text-color($primary-color);
-    }
-    button {
-      line-height: 40px;
-      display: block;
-      background-color: transparent;
-      color: set-text-color($primary-color);
-      font-size: $font-medium;
-      border: none;
-    }
-    &:hover {
-      backdrop-filter: brightness(50%);
-    }
-  }
-  .search {
-    position: relative;
-    padding-top: 3px;
-    margin-right: 1rem;
-    height: 40px;
-    svg {
-      position: absolute;
-      height: 16px;
-      left: 5px;
-      top: 10px;
-    }
-    input {
-      height: 26px;
-      border: none;
-      outline: none;
-      text-indent: 25px;
-      border-radius: 2px;
-    }
-    button {
-      display: none;
-    }
+//   &__item-list {
+//     display: flex;
+//     flex-direction: row;
+//   }
+//   &__item {
+//     padding: 0 1rem;
+//     line-height: 40px;
+//     list-style: none;
+//     a {
+//       color: set-text-color($primary-color);
+//     }
+//     button {
+//       line-height: 40px;
+//       display: block;
+//       background-color: transparent;
+//       color: set-text-color($primary-color);
+//       font-size: $font-medium;
+//       border: none;
+//     }
+//     &:hover {
+//       backdrop-filter: brightness(50%);
+//     }
+//   }
+//   .search {
+//     position: relative;
+//     padding-top: 3px;
+//     margin-right: 1rem;
+//     height: 40px;
+//     svg {
+//       position: absolute;
+//       height: 16px;
+//       left: 5px;
+//       top: 10px;
+//     }
+//     input {
+//       height: 26px;
+//       border: none;
+//       outline: none;
+//       text-indent: 25px;
+//       border-radius: 2px;
+//     }
+//     button {
+//       display: none;
+//     }
+//   }
+// }
+// .main {
+//   // background-color: darkgreen;
+//   height: calc(100vh - 40px);
+
+//   display: flex;
+//   flex-direction: row;
+//   justify-content: space-between;
+//   align-items: stretch;
+
+//   &__content {
+//     flex-grow: 1;
+//   }
+//   .main__content {
+//     padding: 2rem;
+//     height: 100%;
+//     overflow: scroll;
+//   }
+// }
+
+// .side-bar {
+//   width: 150px;
+//   height: 100%;
+//   background-color: $light;
+//   box-shadow: -5px 0px 5px rgba(0, 0, 0, 0.2);
+//   // background-color: darkslategray;
+//   &__item {
+//     text-align: center;
+//     font-size: $font-medium;
+//     a {
+//       display: block;
+//       width: 150px;
+//       padding: 0.5rem;
+//       color: $primary-color;
+//       &:hover,
+//       &.active {
+//         background-color: $primary-color;
+//         color: set-text-color($primary-color);
+//       }
+//       text-overflow: ellipsis;
+//       white-space: nowrap;
+//       overflow: hidden;
+//     }
+//   }
+// }
+
+.trimText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.img-cover {
+  height: 200px;
+  object-fit: cover;
+  &:hover {
+    object-fit: contain;
   }
 }
-.main {
-  height: calc(100vh - 40px);
-
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: stretch;
-
-  &__content {
-    flex-grow: 1;
-  }
-  .main__content {
-    padding: 2rem;
-    height: 100%;
-    overflow: scroll;
+.img-cover-sm {
+  height: 100px;
+  object-fit: cover;
+  &:hover {
+    object-fit: contain;
   }
 }
+.must-fill::after {
+  content: "*";
+  color: red;
+}
 
-.side-bar {
-  width: 150px;
-  height: 100%;
-  background-color: $light;
-  box-shadow: -5px 0px 5px rgba(0, 0, 0, 0.2);
-  &__item {
-    text-align: center;
-    font-size: $font-medium;
-    a {
-      display: block;
-      width: 150px;
-      padding: 0.5rem;
-      color: $primary-color;
-      &:hover,
-      &.active {
-        background-color: $primary-color;
-        color: set-text-color($primary-color);
-      }
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
-  }
+.hover:hover {
+  cursor: pointer;
 }

@@ -1,0 +1,8 @@
+block sidebar
+  .h-100.bg-white.border-right.overflow-auto(style="box-shadow:0px 2px 5px rgba(0,0,0,0.2)")
+    ul.nav.flex-column(style="width:200px")
+      each msg in recent 
+        -var chatWith = +msg.from === user.id ? msg.recievedBy : msg.sendBy
+        li.nav-item
+          a.nav-link(href="/chat/"+chatWith.id) 
+            small.trimText #{chatWith.email}

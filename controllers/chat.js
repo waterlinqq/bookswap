@@ -47,7 +47,7 @@ exports.getChat = async (req, res, next) => {
   const chatId = md5.update(chatUsers).digest("hex");
   establish(chatId);
   const chats = await Chat.findAll({ where: { chatId } });
-  res.render(dest, { chatId, dest, chats, userId });
+  res.render(dest, { chatId, dest, chats, userId, mate });
 };
 
 exports.getIndex = async (req, res, next) => {

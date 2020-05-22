@@ -1,73 +1,81 @@
 extends ../layouts/main-layout.pug
-block styles
-  link(rel="stylesheet", href="/css/order.css")
+include ../includes/transaction-sidebar.pug
+
+//- block styles
+//-   link(rel="stylesheet", href="/css/order.css")
 block content
-  main 
-    h1 提出兌換
-    include ../includes/error-message.pug
-    form.order-form(action="/transaction/order/"+prod.id, method="POST")
-      include ../includes/token-input.pug
-      .form-control
-        label(for="title") 書名
-        input(
-          type="text"  
-          id="title"
-          value=prod.title
-          disabled
-        )
-      .form-control
-        label(for="price") 換幣
-        input(
-          type="text"  
-          id="price"
-          value=prod.price
-          disabled
-        )
-      .form-control
-        label(for="seller") 賣家
-        input(
-          type="text"
-          id="seller"
-          value=seller.email
-          disabled
-        )
-      .form-control
-        label(for="buyer") 買家
-        input(
-          type="text"
-          id="buyer"
-          value=user.email
-          disabled
-        )
-      .form-control
-        label(for="delivery") 交易方式
-        select(id="delivery" name="delivery")
-          option(value="post") 郵寄
-          option(value="conveninet") 超商
-          option(value="meet") 面交
-          option(value="cargo") 貨運
-      .form-control
-        label(for="place") 目的地
-        input(
-          type="text"
-          id="place"
-          name="place"
-          value=value.place
-        )
-      .form-control
-        label(for="time") 接受時間
-        input(
-          type="text"
-          id="time"
-          name="time"
-          value=value.time
-        )
-      .form-control
-        label(for="mark") 備註
-        textarea(
-          type="text"
-          id="mark"
-          name="mark"
-          value=value.mark
-        )
-      button.btn(type="submit") 送出
+  .container
+    .row
+      .col-md-8.mx-auto
+        h5 提出兌換
+        hr 
+        include ../includes/error-message.pug
+        form(action="/transaction/order/"+prod.id, method="POST")
+          include ../includes/token-input.pug
+          .form-group
+            label(for="title") 書名
+            input.form-control(
+              type="text"  
+              id="title"
+              value=prod.title
+              readonly
+            )
+          .form-group
+            label(for="price") 換幣
+            input.form-control(
+              type="text"  
+              id="price"
+              value=prod.price
+              readonly
+            )
+          .form-group
+            label(for="seller") 賣家
+            input.form-control(
+              type="text"
+              id="seller"
+              value=seller.email
+              readonly
+            )
+          .form-group
+            label(for="buyer") 買家
+            input.form-control(
+              type="text"
+              id="buyer"
+              value=user.email
+              readonly
+            )
+          .form-group
+            label(for="delivery") 交易方式
+            select.form-control(id="delivery" name="delivery")
+              option(value="post") 郵寄
+              option(value="conveninet") 超商
+              option(value="meet") 面交
+              option(value="cargo") 貨運
+          .form-group
+            label.must-fill(for="place") 目的地
+            input.form-control(
+              type="text"
+              id="place"
+              name="place"
+              value=value.place
+              required
+            )
+          .form-group
+            label.must-fill(for="time") 接受時間
+            input.form-control(
+              type="text"
+              id="time"
+              name="time"
+              value=value.time
+              required
+            )
+          .form-group
+            label(for="mark") 備註
+            textarea.form-control(
+              type="text"
+              id="mark"
+              name="mark"
+              value=value.mark
+            )
+          .d-flex.justify-content-end
+            button.btn.btn-primary(type="submit") 送出

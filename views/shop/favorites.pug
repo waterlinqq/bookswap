@@ -1,22 +1,20 @@
 extends ../layouts/main-layout.pug
-block styles
-  link(rel="stylesheet", href="/css/favorite.css")
+include ../includes/shop-sidebar.pug 
 block content 
   main 
     if prods.length
-      .grid      
+      .d-flex.flex-wrap           
         each prod in prods  
-          a(href=`/shop/${prod.id}`)
-            article.card.product-item
-              header.card__header
-                h1.product__title #{prod.title}
-                .card__image 
-                  img(src='/images/' + JSON.parse(prod.url)[0], width="200px", height="150px") 
-                .card__content 
-                  h2.card__price #{prod.price} 
-                  form(action="/shop/delete-favorite" method="POST")
+          div.card.m-2(style="width: 15rem;")
+            img.card-img-top.img-cover(src='/images/' + JSON.parse(prod.url)[0]) 
+            .card-body 
+              h5.card-title.trimText(title=prod.title) #{prod.title}
+              p.card-text.text-secondary.trimText #{prod.description}
+              .d-flex.justify-content-end
+                a.btn.btn-primary(href=`/shop/${prod.id}`) 詳情
+                form(action="/shop/delete-favorite" method="POST")
                     include ../includes/token-input.pug
                     input(type="hidden"  name="productId" value=prod.id)
-                    button.btn(type="submit") 取消收藏
+                    button.ml-3.btn.btn-outline-danger(type="submit") 取消收藏
     else
-      h1 尚無最愛
+      h5 尚無最愛
