@@ -1,7 +1,7 @@
 extends ../layouts/main-layout.pug
 //- include ../includes/chat-sidebar.pug
 block content
-  .container
+  .container.text-center
     h5 用戶列表
     table.table.table-striped.table-hover
       thead
@@ -10,6 +10,7 @@ block content
           th 信箱
           th 名稱
           th 城市
+          th 操作
       tbody
         each user in users
             tr.hover(onclick=`location.href="/user/${user.id}"`)
@@ -18,4 +19,6 @@ block content
               td #{user.email}
               td #{user.username}
               td #{user.city}
+              td 
+                a.btn.btn-link(href=`/chat/${user.id}`) 聊天
 

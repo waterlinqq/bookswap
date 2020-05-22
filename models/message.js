@@ -9,7 +9,7 @@ const Message = sequelize.define("message", {
     allowNull: false,
     primaryKey: true,
   },
-  user: Sequelize.STRING,
+  // user: Sequelize.STRING,
   content: Sequelize.TEXT,
 });
 

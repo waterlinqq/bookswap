@@ -7,7 +7,7 @@ const getRecent = chatController.getRecent;
 const router = express.Router();
 
 // router.get("/",getRecent, isAuth, chatController.getRoot);
-router.get("/:userId", getRecent, isAuth, chatController.getChat);
-router.get("/", getRecent, isAuth, chatController.getIndex);
+router.get("/:userId", isAuth, getRecent, chatController.getChat);
+router.get("/", isAuth, getRecent, chatController.getIndex);
 
 module.exports = router;

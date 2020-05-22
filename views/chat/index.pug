@@ -15,7 +15,7 @@ block content
   input#to(value=userId hidden)
   .container.row.h-100
     #messages.bg-white.col-md-8.mx-auto.py-3.h-100.border.d-flex.flex-column
-      h6 #{mate.email}
+      a(href="/user/"+mate.id) #{mate.email}
       hr
       #message-container.container.flex-grow-1.overflow-auto
         each chat in chats

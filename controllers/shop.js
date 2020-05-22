@@ -1,4 +1,5 @@
 const Product = require("../models/product");
+const User = require("../models/user");
 const { Op } = require("sequelize");
 // const Favorites = require("../models/favorite");
 
@@ -15,7 +16,11 @@ exports.getProduct = async (req, res, next) => {
   const id = req.params.productId;
   const prod = await Product.findByPk(id).catch(console.log);
   if (prod == null) return res.redirect("/shop/").catch(console.log);
-  const messages = await prod.getMessages().catch(console);
+  const messages = await prod
+    .getMessages({
+      include: [{ model: User, attributes: ["email", "id"] }],
+    })
+    .catch(console.log);
   const user = await prod.getUser();
   res.render(dest, { prod, dest, messages, seller: user });
 };
@@ -48,7 +53,7 @@ exports.postDeleteFavorite = async (req, res, next) => {
 exports.postMessage = async (req, res, next) => {
   const productId = req.params.productId;
   const content = req.body.content;
-  const user = req.user ? req.user.email : "訪客";
+  const user = req.user ? req.user.id : "";
   const prod = await Product.findByPk(productId).catch(console.log);
   if (prod == null) return res.redirect("/shop/" + productId);
   await prod.createMessage({ content, user }).catch(console.log);

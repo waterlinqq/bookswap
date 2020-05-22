@@ -31,3 +31,6 @@ block content
         tr
           td 簡介
           td #{findUser.description} 
+    .text-right
+      a.text-white.btn.btn-link.btn-primary(href=`/chat/${findUser.id}`) 聊天
+      //- a.btn.btn-link(href=`/chat/${findUser.id}`) 聊天 // 我真的不懂這行哪裡有問題

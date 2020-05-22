@@ -95,6 +95,8 @@ app.use((error, req, res, next) => {
 Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
 User.hasMany(Product);
 User.hasOne(Favorite);
+User.hasMany(Message);
+Message.belongsTo(User);
 Favorite.belongsTo(User);
 Favorite.belongsToMany(Product, { through: FavoriteItem });
 Product.belongsToMany(Favorite, { through: FavoriteItem });

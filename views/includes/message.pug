@@ -10,7 +10,10 @@ section.mt-5
             width="64"
             src=message.userImg || '/system/default-user.jpg')
           .media-body
-            h5.mt-0.mb-1 #{message.user}
+            if(message.user)
+              a.mt-0.mb-1(href="/user/" + message.user.id) #{message.user.email}
+            else 
+              p 訪客
             p #{message.content}
             p.text-right.text-muted #{message.createdAt}
       form(action="/shop/"+ prod.id method="POST")

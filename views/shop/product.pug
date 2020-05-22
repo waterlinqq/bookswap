@@ -2,52 +2,66 @@ extends ../layouts/main-layout.pug
 block scripts
   script(src="/js/product.js")
 include ../includes/shop-sidebar.pug 
-block content 
-  .text-right.pb-1
-    span.badge.badge-primary #{prod.category}
-  .card
-    .card-header.text-center
-      h2.card-title.trimText #{prod.title}
-    .card-body
-      .card-text.row
-        .col-lg-8
-          #carousel.carousel.slide(data-ride="carousel")
-            .carousel-indicators
-              each url, i in JSON.parse(prod.url)
-                li(data-target="#carouselExampleIndicators", data-slide-to=i)
-            .carousel-inner
-              each url in JSON.parse(prod.url)
-                .carousel-item
-                  img.d-block.w-100(style="height: 300px;object-fit: cover;" src='/images/'+url alt=prod.title)
-            a.carousel-control-prev(href="#carousel" role="button" data-slide="prev")
-              span.carousel-control-prev-icon
-            a.carousel-control-next(href="#carousel" role="button" data-slide="next")
-              span.carousel-control-next-icon
-        .col-lg-4.text-center.py-3
-          h5.pb-2 商品資訊
-          .table-responsive
-            table.table.borderless 
-              tbody
-                tr
-                  td 換幣
-                  td #{prod.price}
-                tr
-                  td 作者
-                  td #{prod.author}
-                tr
-                  td ISBN
-                  td #{prod.isbn}
-                tr
-                  td 賣家
-                  td #{seller.email}
-                tr
-                  td 城市
-                  td #{seller.city}
-                tr
-                  td 交易方式
-                  td #{JSON.parse(seller.delivery).join('')}
-    .card-footer.d-flex.justify-content-end
-      a.btn.btn-primary(href="/transaction/order/"+prod.id) 提出兌換
-      include ../includes/add-favorite.pug
-  section
-    include ../includes/message.pug
+block content
+  .row
+    .col-md-10.mx-auto
+      .text-right.pb-1
+        span.p-2.badge.badge-primary #{prod.category}
+      .card
+        .card-header.text-center
+          h2.card-title.trimText #{prod.title}
+        .card-body
+          .card-text.row
+            .col-lg-8
+              #carousel.carousel.slide(data-ride="carousel")
+                .carousel-indicators
+                  each url, i in JSON.parse(prod.url)
+                    li(data-target="#carouselExampleIndicators", data-slide-to=i)
+                .carousel-inner
+                  each url in JSON.parse(prod.url)
+                    .carousel-item
+                      img.d-block.w-100(style="height: 300px;object-fit: cover;" src='/images/'+url alt=prod.title)
+                a.carousel-control-prev(href="#carousel" role="button" data-slide="prev")
+                  span.carousel-control-prev-icon
+                a.carousel-control-next(href="#carousel" role="button" data-slide="next")
+                  span.carousel-control-next-icon
+            .col-lg-4.text-center.py-3
+              h5.pb-2 商品資訊
+              .table-responsive
+                table.table.borderless 
+                  tbody
+                    tr
+                      td 換幣
+                      td #{prod.price}
+                    tr
+                      td 作者
+                      td #{prod.author}
+                    tr
+                      td ISBN
+                      td #{prod.isbn}
+                    tr
+                      td 賣家
+                      td
+                        a(href="/user/" + seller.id) #{seller.email}
+                    tr
+                      td 城市
+                      td #{seller.city}
+                    tr
+                      td 交易方式
+                      td 
+                        .form-group
+                          - var delivery = JSON.parse(seller.delivery) || []
+                          label(for="meet") 面交
+                          input(id="meet" type="checkbox" disabled checked=delivery.includes('meet')) 
+                          label(for="post") 郵寄
+                          input(id="post" type="checkbox" disabled checked=delivery.includes('post'))
+                          label(for="cargo") 貨運
+                          input(id="cargo" type="checkbox" disabled checked=delivery.includes('cargo'))
+                          label(for="convenient") 超商 
+                          input(id="convenient" type="checkbox" disabled checked=delivery.includes('convenient'))
+        .card-footer.d-flex.justify-content-end
+          a.btn.btn-primary(href="/transaction/order/"+prod.id) 提出兌換
+          a.btn.btn-primary.ml-3(href="/chat/"+seller.id) 聊天
+          include ../includes/add-favorite.pug
+      section
+        include ../includes/message.pug
