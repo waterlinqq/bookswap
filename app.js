@@ -16,6 +16,7 @@ const authRouter = require("./routes/auth");
 const errorRouter = require("./routes/error");
 const transactionRouter = require("./routes/transaction");
 const chatRouter = require("./routes/chat");
+const userRouter = require("./routes/user");
 const Product = require("./models/product");
 const User = require("./models/user");
 const Favorite = require("./models/favorite");
@@ -78,6 +79,7 @@ app.use("/shop", shopRouter);
 app.use("/admin", adminRouter);
 app.use("/transaction", transactionRouter);
 app.use("/chat", chatRouter);
+app.use("/user", userRouter);
 app.use(authRouter);
 
 app.get("/", (req, res, next) => {

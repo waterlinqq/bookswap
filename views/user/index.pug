@@ -1,0 +1,21 @@
+extends ../layouts/main-layout.pug
+//- include ../includes/chat-sidebar.pug
+block content
+  .container
+    h5 用戶列表
+    table.table.table-striped.table-hover
+      thead
+        tr
+          th 頭像
+          th 信箱
+          th 名稱
+          th 城市
+      tbody
+        each user in users
+            tr.hover(onclick=`location.href="/user/${user.id}"`)
+              td 
+                img(height="35" width="35" src="/system/default-user.jpg")
+              td #{user.email}
+              td #{user.username}
+              td #{user.city}
+

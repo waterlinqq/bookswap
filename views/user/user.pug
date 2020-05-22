@@ -1,0 +1,33 @@
+extends ../layouts/main-layout.pug
+//- include ../includes/chat-sidebar.pug
+block content
+  .container
+    h5 用戶資訊
+    br
+    table.table.table-striped
+      tbody
+        tr
+          td 信箱
+          td #{findUser.email} 
+        tr
+          td 用戶名
+          td #{findUser.username} 
+        tr
+          td 城市
+          td #{findUser.city} 
+        tr
+          td 交易方式
+          td 
+            .form-check.form-check-inline.mb-2
+              - var delivery = JSON.parse(findUser.delivery) || []
+              label.form-check-label(for="meet") 面交
+              input.form-check-input(id="meet" type="checkbox" disabled checked=delivery.includes('meet')) 
+              label.form-check-label(for="post") 郵寄
+              input.form-check-input(id="post" type="checkbox" disabled checked=delivery.includes('post'))
+              label.form-check-label(for="cargo") 貨運
+              input.form-check-input(id="cargo" type="checkbox" disabled checked=delivery.includes('cargo'))
+              label.form-check-label(for="convenient") 超商 
+              input.form-check-input(id="convenient" type="checkbox" disabled checked=delivery.includes('convenient'))
+        tr
+          td 簡介
+          td #{findUser.description} 
