@@ -6,7 +6,10 @@ const { Op } = require("sequelize");
 exports.getIndex = async (req, res, next) => {
   const dest = "shop/index";
   const { category } = req.query;
-  const filter = category ? { where: { category } } : {};
+  const filter = { where: { state: "0" } };
+  if (category) {
+    filter.category = category;
+  }
   const prods = await Product.findAll(filter);
   res.render(dest, { prods, dest, query: category });
 };
@@ -66,6 +69,7 @@ exports.postSearch = async (req, res, next) => {
 
   const option = {
     where: {
+      state: "0",
       [Op.or]: {
         title: { [Op.like]: "%" + keyword + "%" },
         author: { [Op.like]: "%" + keyword + "%" },

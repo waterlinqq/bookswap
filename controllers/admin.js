@@ -90,10 +90,12 @@ exports.postEditProduct = async (req, res, next) => {
 exports.postDeleteProduct = async (req, res, next) => {
   const id = req.body.productId;
   const prod = await Product.findOne({ where: { id, userId: req.user.id } });
-  for (const url of JSON.parse(prod.url)) {
-    fileHelper.deleteFile("public/" + url);
-  }
-  if (prod) await prod.destroy();
+  prod.state = "3";
+  await prod.save();
+  // for (const url of JSON.parse(prod.url)) {
+  //   fileHelper.deleteFile("public/" + url);
+  // }
+  // if (prod) await prod.destroy();
   res.redirect("/admin/products");
 };
 

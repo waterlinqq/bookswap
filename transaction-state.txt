@@ -9,4 +9,4 @@ product
 0: selling
 1: under transaction
 2: sold out 
-
+3: deleted

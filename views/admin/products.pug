@@ -2,23 +2,35 @@ extends ../layouts/main-layout.pug
 include ../includes/admin-sidebar.pug
 block content 
   main 
-    if prods.length
+    if prods.length 
       .d-flex.flex-wrap           
-        each prod in prods  
-          div.card.m-2(style="width: 15em")
-            img.card-img-top.img-cover( src='/images/' +JSON.parse(prod.url)[0]) 
-            .card-body 
-              h5.card-title.trimText #{prod.title}
-              div.card-text
-                span.d-block 換幣：#{prod.price}
-                span.d-block.trimText 作者：#{prod.author} 
-                span.d-block 類別：#{prod.category}
-                p.mt-1.text-secondary.trimText(style="-webkit-box-orient: vertical") #{prod.description} 
-              .d-flex.justify-content-end
-                a.btn.btn-primary(href=`/admin/edit-product/${prod.id}`) 編輯
-                form(action="/admin/delete-product", method="POST")
-                  include ../includes/token-input.pug
-                  input(type="hidden" value=prod.id name="productId")
-                  button.ml-3.btn.btn-outline-danger(type="submit") 刪除
+        each prod in prods
+          div.m-2
+            .text-right 
+              if(prod.state === '0')
+                span.mb-2.badge.badge-primary 出售中
+              if(prod.state === '3')
+                span.mb-2.badge.badge-secondary 已下架
+              if(prod.state === '2')
+                span.mb-2.badge.badge-success 已售出
+              if(prod.state === 'ㄅ')
+                span.mb-2.badge.badge-danger 交易出
+            div.card(style="width: 15em")
+              .card-header
+                h5.card-title.trimText #{prod.title}
+              img.card-img-top.img-cover( src='/images/' +JSON.parse(prod.url)[0]) 
+              .card-body 
+                div.card-text
+                  span.d-block 換幣：#{prod.price}
+                  span.d-block.trimText 作者：#{prod.author} 
+                  span.d-block 類別：#{prod.category}
+                  p.mt-1.text-secondary.trimText(style="-webkit-box-orient: vertical") #{prod.description} 
+              .card-footer.d-flex.justify-content-end
+                if(prod.state === '0')
+                  a.btn.btn-primary(href=`/admin/edit-product/${prod.id}`) 編輯
+                  form(action="/admin/delete-product", method="POST")
+                    include ../includes/token-input.pug
+                    input(type="hidden" value=prod.id name="productId")
+                    button.ml-3.btn.btn-outline-danger(type="submit") 刪除
     else
       h5 尚無書籍
