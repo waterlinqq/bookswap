@@ -13,8 +13,8 @@ block content
                 span.mb-2.badge.badge-secondary 已下架
               if(prod.state === '2')
                 span.mb-2.badge.badge-success 已售出
-              if(prod.state === 'ㄅ')
-                span.mb-2.badge.badge-danger 交易出
+              if(prod.state === '1')
+                span.mb-2.badge.badge-danger 交易中
             div.card(style="width: 15em")
               .card-header
                 h5.card-title.trimText #{prod.title}
@@ -31,6 +31,6 @@ block content
                   form(action="/admin/delete-product", method="POST")
                     include ../includes/token-input.pug
                     input(type="hidden" value=prod.id name="productId")
-                    button.ml-3.btn.btn-outline-danger(type="submit") 刪除
+                    button.ml-3.btn.btn-outline-danger(type="submit") 下架
     else
       h5 尚無書籍

@@ -32,6 +32,8 @@ html.vh-100(lang="en")
                         a.nav-link(href="/transaction") 交易
                       li.nav-item
                         a.nav-link(href="/chat") 訊息
+                      li.nav-item
+                        a.nav-link(href="/record") 帳戶
                 ul.navbar-nav.ml-auto
                   include ../includes/search.pug
                   if user 
@@ -49,6 +51,7 @@ html.vh-100(lang="en")
             div.align-self-stretch(style="max-width:180px")
               block sidebar
             .flex-grow-1.p-4.overflow-auto
+              include ../includes/modal.pug
               block content
           //- .main__side-bar
           //-   include ../includes/side-bar.pug

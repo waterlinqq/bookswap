@@ -20,6 +20,10 @@ const User = sequelize.define("user", {
   },
   password: Sequelize.STRING,
   email: Sequelize.STRING,
+  money: {
+    type: Sequelize.FLOAT,
+    defaultValue: 0,
+  },
 });
 
 module.exports = User;

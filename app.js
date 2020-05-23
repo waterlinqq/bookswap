@@ -17,6 +17,7 @@ const errorRouter = require("./routes/error");
 const transactionRouter = require("./routes/transaction");
 const chatRouter = require("./routes/chat");
 const userRouter = require("./routes/user");
+const recordeRouter = require("./routes/record");
 const Product = require("./models/product");
 const User = require("./models/user");
 const Favorite = require("./models/favorite");
@@ -24,6 +25,7 @@ const FavoriteItem = require("./models/favorite-item");
 const Message = require("./models/message");
 const Transaction = require("./models/transaction");
 const Chat = require("./models/chat");
+const Record = require("./models/record");
 const getUser = require("./middleware/user");
 const getToken = require("./middleware/token");
 const getDefault = require("./middleware/default");
@@ -80,6 +82,7 @@ app.use("/admin", adminRouter);
 app.use("/transaction", transactionRouter);
 app.use("/chat", chatRouter);
 app.use("/user", userRouter);
+app.use("/record", recordeRouter);
 app.use(authRouter);
 
 app.get("/", (req, res, next) => {
@@ -94,6 +97,7 @@ app.use((error, req, res, next) => {
 // step 1
 Product.belongsTo(User, { constraints: true, onDelete: "CASCADE" });
 User.hasMany(Product);
+User.hasMany(Record);
 User.hasOne(Favorite);
 User.hasMany(Message);
 Message.belongsTo(User);
@@ -103,22 +107,25 @@ Product.belongsToMany(Favorite, { through: FavoriteItem });
 Message.belongsTo(Product);
 Product.hasMany(Message);
 // step 2
-Transaction.belongsTo(User, { as: "buyer", foreignKey: "buyerId" });
-Transaction.belongsTo(User, { as: "seller", foreignKey: "sellerId" });
-Transaction.belongsTo(Product, { foreignKey: "productId" });
+const toRelate = () => {
+  Transaction.belongsTo(User, { as: "buyer", foreignKey: "buyerId" });
+  Transaction.belongsTo(User, { as: "seller", foreignKey: "sellerId" });
+  Transaction.belongsTo(Product, { foreignKey: "productId" });
 
-User.hasMany(Transaction, { as: "buy", foreignKey: "buyerId" });
-User.hasMany(Transaction, { as: "sell", foreignKey: "sellerId" });
+  User.hasMany(Transaction, { as: "buy", foreignKey: "buyerId" });
+  User.hasMany(Transaction, { as: "sell", foreignKey: "sellerId" });
 
-User.hasMany(Chat, { as: "send", foreignKey: "from" });
-User.hasMany(Chat, { as: "recieve", foreignKey: "to" });
+  User.hasMany(Chat, { as: "send", foreignKey: "from" });
+  User.hasMany(Chat, { as: "recieve", foreignKey: "to" });
 
-Chat.belongsTo(User, { as: "sendBy", foreignKey: "from" });
-Chat.belongsTo(User, { as: "recievedBy", foreignKey: "to" });
+  Chat.belongsTo(User, { as: "sendBy", foreignKey: "from" });
+  Chat.belongsTo(User, { as: "recievedBy", foreignKey: "to" });
+};
 
 sequelize
   .sync()
   // .sync({ force: true })
   .then(() => app.listen(3001))
   .then(socket.init)
-  .catch(console.log);
+  .then(toRelate); // necessary ?
+// .catch(console.log);

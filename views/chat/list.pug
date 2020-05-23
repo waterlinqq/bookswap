@@ -5,7 +5,7 @@ block content
     h5 您的訊息
     hr
     each msg in recent
-      -var mate = msg.from == user.id ? msg.recievedBy : msg.sendBy
+      -var mate = msg.from === msg.to ? msg.sendBy : (+msg.from === user.id ? msg.recievedBy : msg.sendBy)
       a.nav-link(href="/chat/"+ mate.id)
         .media.bg-white.p-2.border.rounded
           img.mr-3(height="64s" width="62" src="/system/default-user.jpg")

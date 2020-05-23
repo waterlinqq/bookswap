@@ -30,6 +30,8 @@ exports.postOrder = async (req, res, next) => {
     mark,
     state: 0,
   }).catch(console.log);
+  prod.state = "1";
+  await prod.save();
   res.redirect("/transaction/");
 };
 
@@ -161,6 +163,9 @@ exports.postCancel = async (req, res, next) => {
   } else {
     return res.redirect("/transaction/");
   }
+  const prod = await tran.getProduct();
+  prod.state = "0";
+  await prod.save();
   await tran.save();
   res.redirect("/transaction");
 };
@@ -178,7 +183,10 @@ exports.postFinish = async (req, res, next) => {
   const { transactionId } = req.params;
   const [tran] = await req.user.getBuy({ where: { id: transactionId } });
   if (tran == null) return res.redirect("/transaction/");
+  const prod = await tran.getProduct();
+  prod.state = "2";
   tran.state = "2";
   await tran.save();
+  await prod.save();
   res.redirect("/transaction/");
 };

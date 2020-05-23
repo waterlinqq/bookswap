@@ -1,0 +1,24 @@
+extends ../layouts/main-layout.pug
+//- include ../includes/chat-sidebar.pug
+block content
+  .container
+    .row
+      .col-md-8.mx-auto
+        h5 您的帳戶
+        h6 換幣： 
+          span.text-success.text-bold #{user.money}
+        br
+        table.table.table-striped.text-center
+          thead
+            tr 
+              th  換幣金額
+              th  說明
+              th  時間
+          tbody
+            each record in records
+              tr 
+                td  #{record.amount}
+                td  #{record.reason}
+                td  #{record.createAt}
+        
+
