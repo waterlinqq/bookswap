@@ -131,7 +131,7 @@ const toRelate = () => {
 sequelize
   .sync()
   // .sync({ force: true })
-  .then(() => app.listen(3001))
+  .then(() => app.listen(process.env.PORT || 3001))
   .then(socket.init)
   .then(toRelate); // necessary ?
 // .catch(console.log);
