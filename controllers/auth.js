@@ -6,6 +6,7 @@ const { validationResult } = require("express-validator/check");
 
 const denodeify = require("../utils/denodeify");
 const User = require("../models/user");
+const { transfer } = require("./record");
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
@@ -72,6 +73,7 @@ exports.postSignup = async (req, res, next) => {
   const hashPassord = await bycrypt.hash(password, 12);
 
   const user = await User.create({ email, password: hashPassord });
+  transfer({ userId: user.id, amount: 30, reason: "註冊贈送30換幣" });
   await user.createFavorite();
   res.redirect("/login");
   const msg = {

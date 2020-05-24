@@ -8,6 +8,9 @@ const SequelizeStore = require("connect-session-sequelize")(session.Store);
 const flash = require("connect-flash");
 const csurf = require("csurf");
 const multer = require("multer");
+const socket = require("./socket");
+const helmet = require("helmet");
+const compression = require("compression");
 
 const sequelize = require("./utils/database");
 const shopRouter = require("./routes/shop");
@@ -29,7 +32,7 @@ const Record = require("./models/record");
 const getUser = require("./middleware/user");
 const getToken = require("./middleware/token");
 const getDefault = require("./middleware/default");
-const socket = require("./socket");
+const getHint = require("./middleware/hint");
 
 const app = express();
 const storage = multer.diskStorage({
@@ -71,12 +74,15 @@ app.use(
     }),
   })
 );
+app.use(helmet());
 app.use(flash());
 app.use(csurf());
+app.use(compression());
 
 app.use(getUser);
 app.use(getToken);
 app.use(getDefault);
+app.use(getHint);
 app.use("/shop", shopRouter);
 app.use("/admin", adminRouter);
 app.use("/transaction", transactionRouter);
