@@ -1,7 +1,7 @@
 const { establish } = require("../socket.js");
 const sequelize = require("sequelize");
 const Chat = require("../models/chat");
-const User = require("../models/User");
+const User = require("../models/user");
 const crypto = require("crypto");
 
 exports.getRecent = async (req, res, next) => {
