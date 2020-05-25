@@ -1,7 +1,6 @@
 node_modules
 .vscode
 .env
-public/css/*
 public/images/*
 !public/images/default-user.jpg
 nodemon.json

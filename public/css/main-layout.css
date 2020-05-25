@@ -1,0 +1,38 @@
+html,
+body {
+  padding: 0 !important;
+}
+
+.trimText {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.img-cover {
+  height: 200px;
+  object-fit: cover;
+}
+
+.img-cover:hover {
+  object-fit: contain;
+}
+
+.img-cover-sm {
+  height: 100px;
+  object-fit: cover;
+}
+
+.img-cover-sm:hover {
+  object-fit: contain;
+}
+
+.must-fill::after {
+  content: "*";
+  color: red;
+}
+
+.hover:hover {
+  cursor: pointer;
+}
+/*# sourceMappingURL=main-layout.css.map */
