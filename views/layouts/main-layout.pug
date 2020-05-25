@@ -5,7 +5,7 @@ html.vh-100(lang="en")
         meta(name="viewport", content="width=device-width, initial-scale=1.0")
         meta(http-equiv="X-UA-Compatible", content="ie=edge")
         title #{pageTitle}
-        link(rel="stylesheet", href="/css/main.css")
+        //- link(rel="stylesheet", href="/css/main.css")
         link(rel="stylesheet", href="/css/main-layout.css")
         link(rel="stylesheet", href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css")
         script(src="https://code.jquery.com/jquery-3.5.1.slim.js")
@@ -16,7 +16,7 @@ html.vh-100(lang="en")
         .vh-100.d-flex.flex-column
           header
             nav.navbar.navbar-expand-md.navbar-dark.bg-primary
-              a.navbar-brand(href="#") 換書網
+              a.navbar-brand(href="/") 換書網
               button.navbar-toggler(type="button" data-toggle="collapse" data-target="#navbar")
                 span.navbar-toggler-icon
               #navbar.collapse.navbar-collapse
@@ -34,6 +34,8 @@ html.vh-100(lang="en")
                         a.nav-link(href="/chat") 訊息
                       li.nav-item
                         a.nav-link(href="/record") 帳戶
+                    li.nav-item
+                      a.nav-link(href="/suggestion") 回報
                 ul.navbar-nav.ml-auto
                   include ../includes/search.pug
                   if user 

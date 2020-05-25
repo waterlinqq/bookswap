@@ -3,4 +3,5 @@ node_modules
 .env
 public/css/*
 public/images/*
+!public/images/default-user.jpg
 nodemon.json

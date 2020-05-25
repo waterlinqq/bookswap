@@ -21,12 +21,14 @@ const transactionRouter = require("./routes/transaction");
 const chatRouter = require("./routes/chat");
 const userRouter = require("./routes/user");
 const recordeRouter = require("./routes/record");
+const suggestionRouter = require("./routes/suggestion");
 const Product = require("./models/product");
 const User = require("./models/user");
 const Favorite = require("./models/favorite");
 const FavoriteItem = require("./models/favorite-item");
 const Message = require("./models/message");
 const Transaction = require("./models/transaction");
+require("./models/suggestion");
 const Chat = require("./models/chat");
 const Record = require("./models/record");
 const getUser = require("./middleware/user");
@@ -89,6 +91,7 @@ app.use("/transaction", transactionRouter);
 app.use("/chat", chatRouter);
 app.use("/user", userRouter);
 app.use("/record", recordeRouter);
+app.use("/suggestion", suggestionRouter);
 app.use(authRouter);
 
 app.get("/", (req, res, next) => {

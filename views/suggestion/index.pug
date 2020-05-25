@@ -1,0 +1,41 @@
+extends ../layouts/main-layout.pug
+block content
+  .container
+    .row
+      .col-md-8.mx-auto
+        h5 回報問題或建議
+        p 您好，有遇到任何問題，或是建議歡迎填寫下方表單。
+        hr
+        include ../includes/error-message.pug
+        form(action="/suggestion/send" method="GET")
+          .form-group
+            label.must-fill 稱呼
+            input.form-control(
+              type="text"  
+              name="name"
+              required
+            )
+          .form-group
+            label 聯絡方式
+            input.form-control(
+              type="text"  
+              name="contact"
+              placeholder="信箱、電話、或其他通訊方式"
+            )
+          .form-group
+            label.must-fill 主旨
+            input.form-control(
+              type="text"
+              name="title"
+              required
+            )
+          .form-group
+            label.must-fill 說明
+            textarea.form-control(
+              type="text"
+              name="content"
+              required
+            )
+          .text-right
+            button.btn.btn-primary(type="submit") 送出
+          
