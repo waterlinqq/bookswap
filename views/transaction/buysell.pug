@@ -14,7 +14,7 @@ block content
       - var trader = tran.buyer || tran.seller
       tr.hover(onclick=`location.href = '/transaction/${tran.id}'`)
         td
-          img.img-cover-sm(src='/images/'+JSON.parse(prod.url)[0], alt=prod.title) 
+          img.img-cover-sm(src=JSON.parse(prod.url)[0], alt=prod.title) 
         td
           p #{prod.title} 
           p.text-muted #{prod.author}

@@ -111,6 +111,10 @@ exports.postReset = async (req, res, next) => {
   user.resetToken = token;
   user.resetTokenExpiration = Date.now() + 3600000;
   await user.save();
+  req.flash(
+    "hint",
+    "已經發起一封密碼重置信，請檢查您的郵箱，如果沒有收到，有可能是被當作到垃圾信件"
+  );
   res.redirect("/");
   const msg = {
     to: email,

@@ -9,7 +9,7 @@ block content
       .d-flex.flex-wrap      
         each prod in prods  
           div.card.m-2(style="width: 15rem;")
-            img.card-img-top.img-cover(src='/images/' + JSON.parse(prod.url)[0]) 
+            img.card-img-top.img-cover(src=JSON.parse(prod.url)[0]) 
             .card-body 
               h5.card-title.trimText(title=prod.title) #{prod.title}
               p.card-text.text-secondary.trimText #{prod.description}

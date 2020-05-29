@@ -62,7 +62,7 @@ const fileFilter = (req, file, cb) => {
 };
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(multer({ storage, fileFilter }).array("images"));
+app.use(multer({ /*storage,*/ fileFilter }).array("images"));
 app.set("view engine", "pug");
 app.set("views", "views");
 app.use(express.static(path.join(__dirname, "public")));

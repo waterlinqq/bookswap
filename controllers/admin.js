@@ -1,7 +1,26 @@
 const { validationResult } = require("express-validator/check");
 
-const fileHelper = require("../utils/file-helper");
+const fileHelpe = require("../utils/file-helper");
 const Product = require("../models/product");
+const request = require("request-promise");
+
+const sendImage = async (files) => {
+  const urls = [];
+  const options = {
+    method: "POST",
+    headers: {
+      Authorization: "Client-ID 2cc47a40a0b38df",
+    },
+    formData: {},
+  };
+  for (const file of files) {
+    options.formData.image = file.buffer.toString("base64");
+    const response = await request("https://api.imgur.com/3/upload", options);
+    const link = JSON.parse(response).data.link;
+    urls.push(link);
+  }
+  return urls;
+};
 
 exports.getAddProduct = (req, res, next) => {
   const dest = "admin/add-product";
@@ -26,13 +45,14 @@ exports.postAddProduct = async (req, res, next) => {
       errorParam: errors.array()[0].param,
       dest,
     });
-  const url = JSON.stringify(req.files.map((file) => file.filename));
+  const urls = await sendImage(req.files);
+  // const url = JSON.stringify(req.files.map((file) => file.filename));
   await req.user
     .createProduct({
       title,
       price,
       description,
-      url,
+      url: JSON.stringify(urls),
       isbn,
       author,
       category,
@@ -93,7 +113,7 @@ exports.postDeleteProduct = async (req, res, next) => {
   prod.state = "3";
   await prod.save();
   // for (const url of JSON.parse(prod.url)) {
-  //   fileHelper.deleteFile("public/" + url);
+  //   fileHelpe.deleteFile("public/" + url);
   // }
   // if (prod) await prod.destroy();
   res.redirect("/admin/products");

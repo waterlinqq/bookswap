@@ -20,7 +20,7 @@ block content
                 .carousel-inner
                   each url in JSON.parse(prod.url)
                     .carousel-item
-                      img.d-block.w-100(style="height: 300px;object-fit: cover;" src='/images/'+url alt=prod.title)
+                      img.d-block.w-100(style="height: 300px;object-fit: cover;" src=url alt=prod.title)
                 a.carousel-control-prev(href="#carousel" role="button" data-slide="prev")
                   span.carousel-control-prev-icon
                 a.carousel-control-next(href="#carousel" role="button" data-slide="next")

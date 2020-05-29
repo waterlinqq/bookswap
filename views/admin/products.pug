@@ -18,7 +18,7 @@ block content
             div.card(style="width: 15em")
               .card-header
                 h5.card-title.trimText #{prod.title}
-              img.card-img-top.img-cover( src='/images/' +JSON.parse(prod.url)[0]) 
+              img.card-img-top.img-cover( src=JSON.parse(prod.url)[0]) 
               .card-body 
                 div.card-text
                   span.d-block 換幣：#{prod.price}

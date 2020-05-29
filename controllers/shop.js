@@ -56,10 +56,10 @@ exports.postDeleteFavorite = async (req, res, next) => {
 exports.postMessage = async (req, res, next) => {
   const productId = req.params.productId;
   const content = req.body.content;
-  const user = req.user ? req.user.id : "";
+  const userId = req.user ? req.user.id : "";
   const prod = await Product.findByPk(productId).catch(console.log);
   if (prod == null) return res.redirect("/shop/" + productId);
-  await prod.createMessage({ content, user }).catch(console.log);
+  await prod.createMessage({ content, userId }).catch(console.log);
   res.redirect("/shop/" + productId);
 };
 
