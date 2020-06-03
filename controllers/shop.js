@@ -8,7 +8,7 @@ exports.getIndex = async (req, res, next) => {
   const { category } = req.query;
   const filter = { where: { state: "0" } };
   if (category) {
-    filter.category = category;
+    filter.where.category = category;
   }
   const prods = await Product.findAll(filter);
   res.render(dest, { prods, dest, query: category });
